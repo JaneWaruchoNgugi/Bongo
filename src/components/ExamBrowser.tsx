@@ -82,13 +82,22 @@ export const ExamBrowser: FC = () => {
 
     return (
         <section className="lpeb-section">
-            {GRADE_SECTIONS.map(section => (
-                <GradeRow
-                    key={section.id}
-                    section={section}
-                    onCardClick={() => setOverlay('signup')}
-                />
-            ))}
+            <div className="lpeb-section-head">
+                <span className="lpeb-section-badge">📚 Exam Library</span>
+                <h2 className="lpeb-section-title">Browse exams by grade</h2>
+                <p className="lpeb-section-sub">
+                    CBC-aligned assessments for every level — from Grade 1 to Grade 12.
+                </p>
+            </div>
+            <div className="lpeb-grid">
+                {GRADE_SECTIONS.map(section => (
+                    <GradeRow
+                        key={section.id}
+                        section={section}
+                        onCardClick={() => setOverlay('signup')}
+                    />
+                ))}
+            </div>
             <div className="lpeb-unlock">
                 <button className="lpeb-unlock-btn" onClick={() => setOverlay('signup')}>
                     <Zap size={16} /> Sign up to unlock all {exams.length} exams free

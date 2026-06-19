@@ -6,10 +6,10 @@
 
 /* --- CSS Variables --- */
 :root {
-  --primary: #4f46e5;
+  --primary: #11825a;
   --primary-dark: #3730a3;
   --primary-light: #ffffff;
-  --primary-bg: #eef2ff;
+  --primary-bg: #e6f3ec;
   --success: #059669;
   --success-bg: #ecfdf5;
   --success-border: #a7f3d0;
@@ -1129,7 +1129,7 @@
   width: 100%;
   border-radius: 18px;
   overflow: hidden;
-  background: linear-gradient(135deg, #c4b5f4 0%, #a78bfa 50%, #ddd6fe 100%);
+  background: linear-gradient(135deg, #c4b5f4 0%, #5fae84 50%, #ddd6fe 100%);
   margin-bottom: 24px;
   height: 200px;
   display: flex;
@@ -1171,14 +1171,14 @@
 }
 
 .grade-list-btn:hover {
-  border-color: #a78bfa;
-  background: #f5f3ff;
+  border-color: #5fae84;
+  background: #eef7f1;
 }
 
 .grade-list-btn--active {
-  border-color: #7c3aed;
-  background: #f5f3ff;
-  box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.12);
+  border-color: #157347;
+  background: #eef7f1;
+  box-shadow: 0 0 0 3px rgba(21,115,71, 0.12);
 }
 
 .grade-list-label {
@@ -1190,7 +1190,7 @@
 .grade-list-check {
   width: 26px;
   height: 26px;
-  background: #7c3aed;
+  background: #157347;
   color: white;
   border-radius: 50%;
   display: flex;
@@ -1204,7 +1204,7 @@
 .grade-continue-btn {
   width: 100%;
   padding: 18px;
-  background: #a78bfa;
+  background: #5fae84;
   color: white;
   border: none;
   border-radius: 16px;
@@ -1217,9 +1217,9 @@
 }
 
 .grade-continue-btn:hover:not(:disabled) {
-  background: #7c3aed;
+  background: #157347;
   transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(124, 58, 237, 0.35);
+  box-shadow: 0 8px 24px rgba(21,115,71, 0.35);
 }
 
 .grade-continue-btn:disabled {

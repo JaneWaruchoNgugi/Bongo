@@ -5,7 +5,7 @@
 /* ── Guest Root ──────────────────────────────────────────── */
 .lp-guest {
   min-height: 100vh;
-  background: #0d0520;
+  background: #07140e;
   color: #fff;
   position: relative;
   overflow: hidden;
@@ -29,7 +29,7 @@
 .lp-bg-orb-1 {
   width: 600px;
   height: 600px;
-  background: radial-gradient(circle, rgba(124,58,237,0.35) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(21,115,71,0.35) 0%, transparent 70%);
   top: -150px;
   right: -100px;
 }
@@ -37,7 +37,7 @@
 .lp-bg-orb-2 {
   width: 500px;
   height: 500px;
-  background: radial-gradient(circle, rgba(168,85,247,0.2) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(47,158,106,0.2) 0%, transparent 70%);
   bottom: 100px;
   left: -100px;
 }
@@ -46,8 +46,8 @@
   position: absolute;
   inset: 0;
   background-image:
-    linear-gradient(rgba(124,58,237,0.06) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(124,58,237,0.06) 1px, transparent 1px);
+    linear-gradient(rgba(21,115,71,0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(21,115,71,0.06) 1px, transparent 1px);
   background-size: 60px 60px;
   mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 40%, transparent 100%);
 }
@@ -60,7 +60,7 @@
 .lp-particle {
   position: absolute;
   border-radius: 50%;
-  background: #a855f7;
+  background: #2f9e6a;
   animation: particle-float ease-in-out infinite;
 }
 
@@ -82,9 +82,9 @@
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  background: rgba(168,85,247,0.15);
-  border: 1px solid rgba(168,85,247,0.35);
-  color: #c084fc;
+  background: rgba(47,158,106,0.15);
+  border: 1px solid rgba(47,158,106,0.35);
+  color: #5cba8a;
   padding: 6px 14px;
   border-radius: 999px;
   font-size: 0.78rem;
@@ -103,7 +103,7 @@
 }
 
 .lp-hero-title-accent {
-  background: linear-gradient(135deg, #a855f7, #ec4899);
+  background: linear-gradient(135deg, #2f9e6a, #ec4899);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -136,7 +136,7 @@
   gap: 2px;
 }
 
-.lp-stat-icon { color: #a855f7; margin-bottom: 2px; }
+.lp-stat-icon { color: #2f9e6a; margin-bottom: 2px; }
 .lp-stat-val {
   font-size: 1.3rem;
   font-weight: 800;
@@ -152,7 +152,7 @@
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  background: linear-gradient(135deg, #7c3aed, #a855f7);
+  background: linear-gradient(135deg, #157347, #2f9e6a);
   color: #fff;
   padding: 0.85rem 1.75rem;
   border-radius: 999px;
@@ -160,12 +160,12 @@
   font-weight: 700;
   border: none;
   cursor: pointer;
-  box-shadow: 0 8px 28px rgba(124,58,237,0.45);
+  box-shadow: 0 8px 28px rgba(21,115,71,0.45);
   transition: transform 0.2s, box-shadow 0.2s;
 }
 .lp-btn-primary:hover {
   transform: translateY(-2px);
-  box-shadow: 0 12px 36px rgba(124,58,237,0.55);
+  box-shadow: 0 12px 36px rgba(21,115,71,0.55);
 }
 
 .lp-btn-ghost {
@@ -221,7 +221,7 @@
 
 .lp-sc-info { flex: 1; display: flex; flex-direction: column; gap: 2px; }
 .lp-sc-name { font-size: 0.88rem; font-weight: 700; color: #fff; }
-.lp-sc-xp { font-size: 0.72rem; font-weight: 600; color: #a855f7; }
+.lp-sc-xp { font-size: 0.72rem; font-weight: 600; color: #2f9e6a; }
 
 .lp-sc-badge {
   font-size: 0.6rem;
@@ -240,8 +240,8 @@
   position: absolute;
   bottom: 30px;
   right: 0;
-  background: rgba(124,58,237,0.25);
-  border: 1px solid rgba(168,85,247,0.35);
+  background: rgba(21,115,71,0.25);
+  border: 1px solid rgba(47,158,106,0.35);
   border-radius: 14px;
   padding: 0.75rem 1rem;
   width: 210px;
@@ -267,7 +267,7 @@
 
 .lp-xp-bar-fill {
   height: 100%;
-  background: linear-gradient(90deg, #7c3aed, #ec4899);
+  background: linear-gradient(90deg, #157347, #ec4899);
   border-radius: 999px;
   position: relative;
   transition: width 1s ease;
@@ -308,9 +308,9 @@
 
 .lp-section-badge {
   display: inline-block;
-  background: rgba(168,85,247,0.15);
-  border: 1px solid rgba(168,85,247,0.3);
-  color: #c084fc;
+  background: rgba(47,158,106,0.15);
+  border: 1px solid rgba(47,158,106,0.3);
+  color: #5cba8a;
   padding: 5px 14px;
   border-radius: 999px;
   font-size: 0.78rem;
@@ -327,7 +327,7 @@
 }
 
 .lp-section-title span {
-  background: linear-gradient(135deg, #a855f7, #ec4899);
+  background: linear-gradient(135deg, #2f9e6a, #ec4899);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -380,12 +380,12 @@
   position: relative;
   z-index: 1;
   margin: 0 2rem 4rem;
-  background: linear-gradient(135deg, #4c1d95, #7c3aed, #a855f7);
+  background: linear-gradient(135deg, #0b3d28, #157347, #2f9e6a);
   border-radius: 24px;
   padding: 4rem 2rem;
   text-align: center;
   overflow: hidden;
-  box-shadow: 0 20px 60px rgba(124,58,237,0.4);
+  box-shadow: 0 20px 60px rgba(21,115,71,0.4);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -413,7 +413,7 @@
 
 .lp-cta-btn {
   background: #fff;
-  color: #7c3aed;
+  color: #157347;
   border: none;
   padding: 0.85rem 2rem;
   border-radius: 999px;
@@ -523,14 +523,14 @@
 .lp-sh-section { display: flex; flex-direction: column; gap: 0.75rem; }
 .lp-sh-section-header { display: flex; align-items: center; justify-content: space-between; }
 .lp-sh-section-header h3 { font-size: 1rem; font-weight: 800; color: #1e1b4b; }
-.lp-sh-see-all { display: inline-flex; align-items: center; gap: 2px; background: none; border: none; color: #7c3aed; font-size: 0.8rem; font-weight: 600; cursor: pointer; }
+.lp-sh-see-all { display: inline-flex; align-items: center; gap: 2px; background: none; border: none; color: #157347; font-size: 0.8rem; font-weight: 600; cursor: pointer; }
 
 .lp-sh-subjects-row { display: flex; flex-wrap: wrap; gap: 0.5rem; }
 .lp-sh-subject-chip {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  background: #f5f3ff;
+  background: #eef7f1;
   border: 1.5px solid #ddd6fe;
   border-radius: 999px;
   padding: 6px 14px;
@@ -540,7 +540,7 @@
   cursor: pointer;
   transition: all 0.2s;
 }
-.lp-sh-subject-chip:hover { background: #ede9fe; border-color: #a78bfa; transform: translateY(-1px); }
+.lp-sh-subject-chip:hover { background: #d9efe1; border-color: #5fae84; transform: translateY(-1px); }
 .lp-sh-chip-emoji { font-size: 1rem; }
 
 /* Quick stats */
@@ -576,7 +576,7 @@
   align-items: center;
   justify-content: center;
   gap: 0.6rem;
-  background: linear-gradient(135deg, #7c3aed, #a855f7);
+  background: linear-gradient(135deg, #157347, #2f9e6a);
   color: #fff;
   border: none;
   padding: 0.85rem;
@@ -584,10 +584,10 @@
   font-size: 0.95rem;
   font-weight: 700;
   cursor: pointer;
-  box-shadow: 0 6px 20px rgba(124,58,237,0.3);
+  box-shadow: 0 6px 20px rgba(21,115,71,0.3);
   transition: transform 0.2s, box-shadow 0.2s;
 }
-.lp-sh-dashboard-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 28px rgba(124,58,237,0.4); }
+.lp-sh-dashboard-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 28px rgba(21,115,71,0.4); }
 
 /* ══════════════════════════════════════════════════════════
    LOGGED-IN: PARENT HOME
@@ -606,7 +606,7 @@
   align-items: center;
   gap: 1rem;
   padding: 1.5rem;
-  background: linear-gradient(135deg, #4c1d95, #7c3aed);
+  background: linear-gradient(135deg, #0b3d28, #157347);
   border-radius: 20px;
   color: #fff;
 }
@@ -682,9 +682,9 @@
   justify-content: center;
   gap: 8px;
   width: 100%;
-  background: rgba(124,58,237,0.08);
-  border: 1.5px solid rgba(124,58,237,0.2);
-  color: #7c3aed;
+  background: rgba(21,115,71,0.08);
+  border: 1.5px solid rgba(21,115,71,0.2);
+  color: #157347;
   padding: 0.75rem;
   border-radius: 14px;
   font-size: 0.9rem;
@@ -694,7 +694,7 @@
   margin-top: 0.25rem;
 }
 .lp-parent-manage-btn:hover {
-  background: rgba(124,58,237,0.14);
+  background: rgba(21,115,71,0.14);
   transform: translateY(-1px);
 }
 /* ========== PROFESSIONAL REDESIGN ========== */
@@ -713,11 +713,11 @@
   display: flex;
   align-items: center;
   gap: 1rem;
-  background: linear-gradient(135deg, #4c1d95, #7c3aed, #a855f7);
+  background: linear-gradient(135deg, #0b3d28, #157347, #2f9e6a);
   border-radius: 24px;
   padding: 1.5rem;
   color: white;
-  box-shadow: 0 12px 36px rgba(124,58,237,0.3);
+  box-shadow: 0 12px 36px rgba(21,115,71,0.3);
 }
 .lp-parent-avatar {
   font-size: 3rem;
@@ -731,7 +731,7 @@
   border: 2px solid rgba(255,255,255,0.3);
 }
 .lp-parent-info h1 {
-  font-family: 'Fredoka One', cursive;
+  font-family: 'Poppins', cursive;
   font-size: 1.5rem;
   font-weight: 400;
   margin: 0 0 0.25rem 0;
@@ -747,7 +747,7 @@
 .lp-empty-state {
   text-align: center;
   padding: 2.5rem;
-  background: linear-gradient(135deg, #faf5ff, #fce7f3);
+  background: linear-gradient(135deg, #f0f9f4, #fce7f3);
   border-radius: 24px;
   border: 2px dashed #c4b5fd;
 }
@@ -757,7 +757,7 @@
   animation: float-up 3s ease-in-out infinite;
 }
 .lp-empty-state h3 {
-  font-family: 'Fredoka One', cursive;
+  font-family: 'Poppins', cursive;
   font-size: 1.3rem;
   font-weight: 400;
   margin-bottom: 0.5rem;
@@ -769,7 +769,7 @@
   margin-bottom: 1.5rem;
 }
 .lp-btn-add {
-  background: linear-gradient(135deg, #7c3aed, #a855f7);
+  background: linear-gradient(135deg, #157347, #2f9e6a);
   color: white;
   border: none;
   padding: 0.65rem 1.4rem;
@@ -778,11 +778,11 @@
   cursor: pointer;
   transition: all 0.2s;
   font-family: 'Nunito', sans-serif;
-  box-shadow: 0 4px 14px rgba(124,58,237,0.3);
+  box-shadow: 0 4px 14px rgba(21,115,71,0.3);
 }
 .lp-btn-add:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(124,58,237,0.4);
+  box-shadow: 0 8px 20px rgba(21,115,71,0.4);
 }
 
 /* Student List (Parent) */
@@ -793,7 +793,7 @@
   margin-bottom: 0.5rem;
 }
 .lp-section-header h2 {
-  font-family: 'Fredoka One', cursive;
+  font-family: 'Poppins', cursive;
   font-size: 1.25rem;
   font-weight: 400;
   color: #1e1b4b;
@@ -803,7 +803,7 @@
 .lp-text-link {
   background: none;
   border: none;
-  color: #7c3aed;
+  color: #157347;
   font-size: 0.85rem;
   font-weight: 800;
   cursor: pointer;
@@ -826,18 +826,18 @@
   cursor: pointer;
   transition: all 0.2s;
   box-shadow: 0 2px 12px rgba(0,0,0,0.05);
-  border: 2px solid #f3e8ff;
+  border: 2px solid #e3f5ea;
 }
 .lp-student-item:hover {
   transform: translateX(5px);
-  box-shadow: 0 6px 20px rgba(124,58,237,0.12);
+  box-shadow: 0 6px 20px rgba(21,115,71,0.12);
   border-color: #c4b5fd;
 }
 .lp-student-avatar {
   font-size: 2rem;
   width: 50px;
   height: 50px;
-  background: linear-gradient(135deg, #f5f3ff, #fce7f3);
+  background: linear-gradient(135deg, #eef7f1, #fce7f3);
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -860,7 +860,7 @@
   margin-bottom: 0.5rem;
 }
 .lp-student-level {
-  background: #f5f3ff;
+  background: #eef7f1;
   padding: 2px 8px;
   border-radius: 999px;
   font-weight: 700;
@@ -869,13 +869,13 @@
 .lp-student-progress { width: 100%; }
 .lp-progress-bar {
   height: 8px;
-  background: #f3e8ff;
+  background: #e3f5ea;
   border-radius: 999px;
   overflow: hidden;
 }
 .lp-progress-fill {
   height: 100%;
-  background: linear-gradient(90deg, #7c3aed, #ec4899);
+  background: linear-gradient(90deg, #157347, #ec4899);
   border-radius: 999px;
 }
 .lp-student-arrow { color: #c4b5fd; }
@@ -906,7 +906,7 @@
 }
 .lp-student-header-info { flex: 1; }
 .lp-student-header-info h1 {
-  font-family: 'Fredoka One', cursive;
+  font-family: 'Poppins', cursive;
   font-size: 1.5rem;
   font-weight: 400;
   margin: 0 0 0.5rem 0;
@@ -972,13 +972,13 @@
   padding: 1rem;
   text-align: center;
   box-shadow: 0 2px 12px rgba(0,0,0,0.05);
-  border: 2px solid #f3e8ff;
+  border: 2px solid #e3f5ea;
   transition: transform 0.2s, box-shadow 0.2s;
 }
-.lp-stat-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(124,58,237,0.1); }
-.lp-stat-icon { color: #7c3aed; margin-bottom: 0.5rem; }
+.lp-stat-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(21,115,71,0.1); }
+.lp-stat-icon { color: #157347; margin-bottom: 0.5rem; }
 .lp-stat-value {
-  font-family: 'Fredoka One', cursive;
+  font-family: 'Poppins', cursive;
   font-size: 1.3rem;
   font-weight: 400;
   color: #1e1b4b;
@@ -1003,7 +1003,7 @@
   align-items: center;
   gap: 8px;
   background: white;
-  border: 2px solid #f3e8ff;
+  border: 2px solid #e3f5ea;
   border-radius: 16px;
   padding: 0.75rem;
   font-size: 0.85rem;
@@ -1015,9 +1015,9 @@
 }
 .lp-subject-card:hover {
   border-color: #c4b5fd;
-  background: #faf5ff;
+  background: #f0f9f4;
   transform: translateY(-3px) rotate(-0.5deg);
-  box-shadow: 0 6px 18px rgba(124,58,237,0.12);
+  box-shadow: 0 6px 18px rgba(21,115,71,0.12);
 }
 .lp-subject-emoji { font-size: 1.3rem; }
 .lp-subject-name { flex: 1; text-align: left; }
@@ -1033,14 +1033,14 @@
   align-items: center;
   gap: 1rem;
   background: white;
-  border: 2px solid #f3e8ff;
+  border: 2px solid #e3f5ea;
   border-radius: 18px;
   padding: 1rem;
   cursor: pointer;
   transition: all 0.2s;
 }
 .lp-continue-item:hover {
-  background: #faf5ff;
+  background: #f0f9f4;
   border-color: #c4b5fd;
   transform: translateX(4px);
 }
@@ -1068,7 +1068,7 @@
   align-items: center;
   justify-content: center;
   gap: 8px;
-  background: linear-gradient(135deg, #7c3aed, #ec4899);
+  background: linear-gradient(135deg, #157347, #ec4899);
   color: white;
   border: none;
   padding: 0.9rem;
@@ -1078,11 +1078,11 @@
   font-weight: 800;
   cursor: pointer;
   transition: transform 0.2s, box-shadow 0.2s;
-  box-shadow: 0 6px 20px rgba(124,58,237,0.3);
+  box-shadow: 0 6px 20px rgba(21,115,71,0.3);
 }
 .lp-dashboard-btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 10px 28px rgba(124,58,237,0.4);
+  box-shadow: 0 10px 28px rgba(21,115,71,0.4);
 }
 
 /* Responsive */
@@ -1165,7 +1165,7 @@
 
 .lp-home-hero-info { flex: 1; }
 .lp-home-greeting { font-size: 0.8rem; color: rgba(255,255,255,0.75); margin: 0 0 0.15rem; font-weight: 600; }
-.lp-home-name { font-family: 'Fredoka One', cursive; font-size: 1.5rem; color: #fff; margin: 0 0 0.4rem; letter-spacing: 0.3px; }
+.lp-home-name { font-family: 'Poppins', cursive; font-size: 1.5rem; color: #fff; margin: 0 0 0.4rem; letter-spacing: 0.3px; }
 
 .lp-home-badges { display: flex; flex-wrap: wrap; gap: 0.4rem; }
 .lp-home-badge {
@@ -1211,8 +1211,8 @@
   background: #fff;
   border-radius: 20px;
   padding: 1.1rem 1.1rem 1.25rem;
-  border: 1.5px solid #f3e8ff;
-  box-shadow: 0 2px 12px rgba(124,58,237,0.06);
+  border: 1.5px solid #e3f5ea;
+  box-shadow: 0 2px 12px rgba(21,115,71,0.06);
   animation: fade-up 0.45s cubic-bezier(0.22,1,0.36,1) both;
 }
 .lp-home-section:nth-child(2) { animation-delay: 0.06s; }
@@ -1224,9 +1224,9 @@
   display: flex; align-items: center; justify-content: space-between;
   margin-bottom: 0.85rem;
 }
-.lp-home-section-hd h3 { font-family: 'Fredoka One', cursive; font-size: 1rem; font-weight: 400; color: #1e1b4b; margin: 0; letter-spacing: 0.3px; }
-.lp-home-see-all { background: none; border: none; color: #7c3aed; font-size: 0.78rem; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 2px; }
-.lp-home-see-all:hover { color: #5b21b6; }
+.lp-home-section-hd h3 { font-family: 'Poppins', cursive; font-size: 1rem; font-weight: 400; color: #1e1b4b; margin: 0; letter-spacing: 0.3px; }
+.lp-home-see-all { background: none; border: none; color: #157347; font-size: 0.78rem; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 2px; }
+.lp-home-see-all:hover { color: #0f5132; }
 
 /* ── Quick actions ── */
 .lp-home-actions {
@@ -1247,7 +1247,7 @@
 
 .lp-action-icon { font-size: 1.6rem; }
 
-.lp-action-quiz  { background: #f3e8ff; color: #6d28d9; box-shadow: 0 2px 10px rgba(124,58,237,0.12); }
+.lp-action-quiz  { background: #e3f5ea; color: #6d28d9; box-shadow: 0 2px 10px rgba(21,115,71,0.12); }
 .lp-action-exam  { background: #fef3c7; color: #92400e; box-shadow: 0 2px 10px rgba(245,158,11,0.12); }
 .lp-action-games { background: #dcfce7; color: #166534; box-shadow: 0 2px 10px rgba(16,185,129,0.12); }
 .lp-action-dash  { background: #dbeafe; color: #1e40af; box-shadow: 0 2px 10px rgba(59,130,246,0.12); }
@@ -1263,7 +1263,7 @@
   font-size: 0.75rem; font-weight: 700;
   transition: transform 0.2s;
 }
-.lp-home-day-dot.done   { background: #7c3aed; color: #fff; }
+.lp-home-day-dot.done   { background: #157347; color: #fff; }
 .lp-home-day-dot.today  { background: #f59e0b; color: #fff; animation: pulse-ring 1.8s ease-out infinite; }
 .lp-home-day-dot.future { background: #f3f4f6; color: #d1d5db; }
 .lp-home-day-label { font-size: 0.65rem; font-weight: 600; color: #9ca3af; }
@@ -1273,31 +1273,31 @@
 .lp-home-continue-item {
   display: flex; align-items: center; gap: 0.75rem;
   padding: 0.7rem 0.85rem;
-  background: #faf5ff; border: 1.5px solid #ede9fe;
+  background: #f0f9f4; border: 1.5px solid #d9efe1;
   border-radius: 14px; cursor: pointer;
   transition: all 0.2s cubic-bezier(0.22,1,0.36,1);
   text-align: left; width: 100%;
 }
-.lp-home-continue-item:hover { background: #f3e8ff; border-color: #c4b5fd; transform: translateX(3px); }
+.lp-home-continue-item:hover { background: #e3f5ea; border-color: #c4b5fd; transform: translateX(3px); }
 
 .lp-home-ci-emoji { font-size: 1.4rem; flex-shrink: 0; }
 .lp-home-ci-info { flex: 1; display: flex; flex-direction: column; gap: 4px; }
 .lp-home-ci-name { font-size: 0.85rem; font-weight: 700; color: #1e1b4b; }
-.lp-home-ci-bar { height: 5px; background: #e9d5ff; border-radius: 999px; overflow: hidden; }
+.lp-home-ci-bar { height: 5px; background: #c9ebd8; border-radius: 999px; overflow: hidden; }
 .lp-home-ci-fill { height: 100%; border-radius: 999px; transition: width 0.8s ease; }
-.lp-home-ci-pct { font-size: 0.75rem; font-weight: 700; color: #7c3aed; white-space: nowrap; }
+.lp-home-ci-pct { font-size: 0.75rem; font-weight: 700; color: #157347; white-space: nowrap; }
 
 /* ── Subjects ── */
 .lp-home-subjects { display: flex; flex-wrap: wrap; gap: 0.5rem; }
 .lp-home-subject-chip {
   display: inline-flex; align-items: center; gap: 5px;
-  background: #f5f3ff; border: 1.5px solid #ddd6fe;
+  background: #eef7f1; border: 1.5px solid #ddd6fe;
   border-radius: 999px; padding: 6px 13px;
   font-size: 0.8rem; font-weight: 600; color: #6d28d9;
   cursor: pointer; transition: all 0.18s cubic-bezier(0.34,1.56,0.64,1);
   font-family: 'Nunito', sans-serif;
 }
-.lp-home-subject-chip:hover { background: #ede9fe; border-color: #a78bfa; transform: translateY(-2px) scale(1.04); }
+.lp-home-subject-chip:hover { background: #d9efe1; border-color: #5fae84; transform: translateY(-2px) scale(1.04); }
 
 /* ── Tip of the day ── */
 .lp-home-tip {

@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { GraduationCap, Mail, Phone, MapPin, Send, Facebook, Twitter, Instagram, Youtube, ArrowUpRight } from 'lucide-react';
+import { GraduationCap, Send, Facebook, Twitter, Instagram, Youtube, ArrowUpRight } from 'lucide-react';
 import '../styles/footer.css';
 
 const SOCIALS = [
@@ -22,12 +22,6 @@ const LINKS = [
 const Footer: React.FC = () => {
   const navigate = useNavigate();
   const year = new Date().getFullYear();
-  const [email, setEmail] = useState('');
-  const [subbed, setSubbed] = useState(false);
-
-  const handleSubscribe = () => {
-    if (email.includes('@')) { setSubbed(true); setEmail(''); }
-  };
 
   return (
     <footer className="ft-root">
@@ -66,32 +60,6 @@ const Footer: React.FC = () => {
             </ul>
           </div>
 
-          {/* Contact */}
-          <div className="ft-col">
-            <h4 className="ft-col-title">Contact</h4>
-            <ul className="ft-contact-list">
-              <li><a href="mailto:hello@gradeup.co.ke" className="ft-contact-item"><Mail size={15}/><span>hello@gradeup.co.ke</span></a></li>
-              <li><a href="tel:+254700000000" className="ft-contact-item"><Phone size={15}/><span>+254 700 000 000</span></a></li>
-              <li className="ft-contact-item ft-no-link"><MapPin size={15}/><span>Westlands, Nairobi</span></li>
-            </ul>
-          </div>
-
-          {/* Newsletter */}
-          <div className="ft-col">
-            <h4 className="ft-col-title">Stay Updated</h4>
-            <p className="ft-newsletter-desc">New quizzes, study tips & CBC updates in your inbox.</p>
-            {subbed ? (
-              <div className="ft-sub-success">🎉 You're subscribed!</div>
-            ) : (
-              <div className="ft-newsletter-form">
-                <input type="email" placeholder="your@email.com" className="ft-nl-input"
-                  value={email} onChange={e => setEmail(e.target.value)}
-                  onKeyDown={e => e.key === 'Enter' && handleSubscribe()} />
-                <button className="ft-nl-btn" onClick={handleSubscribe}><Send size={14} /></button>
-              </div>
-            )}
-            <p className="ft-nl-note">No spam. Unsubscribe anytime.</p>
-          </div>
         </div>
 
         <div className="ft-bottom">

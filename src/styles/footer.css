@@ -1,6 +1,6 @@
 /* footer.css */
 .ft-root {
-  background: #0d0520;
+  background: #07140e;
   color: rgba(255,255,255,0.75);
   position: relative;
 }
@@ -13,17 +13,20 @@
 .ft-wave svg { width: 100%; height: 60px; display: block; }
 
 .ft-body {
-  max-width: 1200px;
+  width: 100%;
   margin: 0 auto;
-  padding: 3rem 2rem 2rem;
+  padding: 3rem clamp(1.5rem, 5vw, 5rem) 2rem;
 }
 
 .ft-grid {
   display: grid;
-  grid-template-columns: 2fr 1fr 1fr 1.5fr;
+  grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
   gap: 3rem;
-  margin-bottom: 3rem;
+  margin-bottom: 2.5rem;
+  align-items: start;
 }
+
+.ft-brand { max-width: 460px; }
 
 /* Brand col */
 .ft-logo {
@@ -39,7 +42,7 @@
 .ft-logo-icon {
   width: 36px;
   height: 36px;
-  background: linear-gradient(135deg, #7c3aed, #a855f7);
+  background: linear-gradient(135deg, #157347, #2f9e6a);
   border-radius: 10px;
   display: flex;
   align-items: center;
@@ -53,7 +56,7 @@
 }
 
 .ft-logo strong {
-  background: linear-gradient(135deg, #a855f7, #ec4899);
+  background: linear-gradient(135deg, #2f9e6a, #ec4899);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -128,7 +131,7 @@
 a.ft-contact-item:hover { color: #fff; }
 .ft-no-link { cursor: default; }
 
-.ft-contact-item svg { color: #a855f7; flex-shrink: 0; }
+.ft-contact-item svg { color: #2f9e6a; flex-shrink: 0; }
 
 /* Newsletter */
 .ft-newsletter-desc {
@@ -156,11 +159,11 @@ a.ft-contact-item:hover { color: #fff; }
   outline: none;
   transition: border-color 0.2s;
 }
-.ft-nl-input:focus { border-color: rgba(168,85,247,0.5); }
+.ft-nl-input:focus { border-color: rgba(47,158,106,0.5); }
 .ft-nl-input::placeholder { color: rgba(255,255,255,0.3); }
 
 .ft-nl-btn {
-  background: linear-gradient(135deg, #7c3aed, #a855f7);
+  background: linear-gradient(135deg, #157347, #2f9e6a);
   border: none;
   border-radius: 0 10px 10px 0;
   padding: 0 0.9rem;

@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {useStore, type StudentProfile, type EducationLevel} from '../../store/useStore';
 import {useNavigate} from 'react-router-dom';
-import {CheckCircle, Plus, LogOut, ArrowLeft, UserRound} from 'lucide-react';
+import {CheckCircle, Plus, LogOut, ArrowLeft, GraduationCap, UserRoundPlus} from 'lucide-react';
 import '../../styles/profile-select.css';
 import {AVATARS, avatarUrl} from "../../hooks/Packages.ts";
 
@@ -79,8 +79,9 @@ const ProfileSelectOverlay: React.FC = () => {
             {!adding ? (
                 <div className="ps-screen">
                     <div className="ps-header">
-                        <h1 className="ps-heading">Who's learning today? 🎯</h1>
-                        <p className="ps-subheading">Pick your profile and let's go</p>
+                        <div className="ps-header-badge"><GraduationCap size={26}/></div>
+                        <h1 className="ps-heading">Who's learning today?</h1>
+                        <p className="ps-subheading">Pick a profile to continue learning</p>
                     </div>
 
                     <div className="ps-profiles-grid">
@@ -110,8 +111,8 @@ const ProfileSelectOverlay: React.FC = () => {
                 <div className="pas-add-screen-container">
                     <div className="ps-add-screen">
                         <div className="ps-add-header">
-                            <div className="ps-add-icon"><UserRound size={22}/></div>
-                            <h2 className="ps-heading" style={{fontSize: '1.55rem'}}>New Profile ✨</h2>
+                            <div className="ps-add-icon"><UserRoundPlus size={22}/></div>
+                            <h2 className="ps-heading" style={{fontSize: '1.55rem'}}>New Profile</h2>
                             <p className="ps-subheading">Set up a learner profile</p>
                         </div>
 

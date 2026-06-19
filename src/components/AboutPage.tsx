@@ -15,7 +15,7 @@ const FEATURES = [
 const STEPS = [
   { n: 1, icon: CheckCircle, title: 'Choose Your Level', desc: 'Select your class and focus area.', color: '#10b981' },
   { n: 2, icon: BookOpen,    title: 'Take Quizzes',      desc: 'Answer interactive questions with instant feedback.', color: '#3b82f6' },
-  { n: 3, icon: TrendingUp,  title: 'Track Progress',    desc: 'See your improvement over time.', color: '#a855f7' },
+  { n: 3, icon: TrendingUp,  title: 'Track Progress',    desc: 'See your improvement over time.', color: '#2f9e6a' },
 ];
 
 const AboutPage: React.FC = () => {

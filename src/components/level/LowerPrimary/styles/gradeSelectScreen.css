@@ -3,7 +3,7 @@
 .lower-gs-wrapper {
     min-height: 100vh;
     background: var(--bg);
-    background-image: radial-gradient(rgba(167,139,250,0.2) 1.5px, transparent 1.5px);
+    background-image: radial-gradient(rgba(95,174,132,0.2) 1.5px, transparent 1.5px);
     background-size: 22px 22px;
     display: flex;
     align-items: center;

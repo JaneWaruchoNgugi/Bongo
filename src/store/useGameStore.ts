@@ -3,7 +3,7 @@ import Mahjong from '../assets/Games/mahjong.png';
 import GradeUp from '../assets/Games/bongoquiz.png';
 import Sudoku from '../assets/Games/sodoku.png';
 import MathQuiz from '../assets/Games/mathquiz.png';
-import BibleQuiz from '../assets/Games/Bible-IMG.png';
+import BibleQuiz from '../../../Documents/bongoquiz/src/assets/gamesposter/Bible-IMG.png';
 import Checkers from '../assets/Games/checkers.png';
 import TicTacToe from '../assets/Games/tictactoe.png';
 import WordQuest from '../assets/Games/wordquest.png';
@@ -47,7 +47,7 @@ const ALL_GAMES: Game[] = [
     tags: ['hot', 'popular', 'math'],
     image: Mahjong,
     emoji: '🧮',
-    bgColor: 'linear-gradient(135deg, #7c3aed 0%, #4f46e5 100%)',
+    bgColor: 'linear-gradient(135deg, #157347 0%, #11825a 100%)',
     component: '/games/mahjong',
     xpReward: 120,
     coinReward: 50,
@@ -110,7 +110,7 @@ const ALL_GAMES: Game[] = [
     tags: ['popular', 'math'],
     image: BibleQuiz,
     emoji: '⚔️',
-    bgColor: 'linear-gradient(135deg, #7c3aed 0%, #a855f7 100%)',
+    bgColor: 'linear-gradient(135deg, #157347 0%, #2f9e6a 100%)',
     component: '/games/bible-quiz',
     xpReward: 130,
     coinReward: 55,
@@ -140,7 +140,7 @@ const ALL_GAMES: Game[] = [
     tags: ['new', 'english'],
     image: TicTacToe,
     emoji: '📚',
-    bgColor: 'linear-gradient(135deg, #1d4ed8 0%, #7c3aed 100%)',
+    bgColor: 'linear-gradient(135deg, #1d4ed8 0%, #157347 100%)',
     component: '/games/tictac-toe',
     xpReward: 90,
     coinReward: 35,
@@ -170,7 +170,7 @@ const ALL_GAMES: Game[] = [
     tags: ['math', 'puzzle'],
     image: KiswahiliQuiz,
     emoji: '📐',
-    bgColor: 'linear-gradient(135deg, #6d28d9 0%, #5b21b6 100%)',
+    bgColor: 'linear-gradient(135deg, #6d28d9 0%, #0f5132 100%)',
     component: '/games/kiswahili-quiz',
     xpReward: 110,
     coinReward: 45,
@@ -186,7 +186,7 @@ const ALL_GAMES: Game[] = [
     tags: ['hot', 'puzzle', 'quiz'],
     image: ConnectFour,
     emoji: '🧠',
-    bgColor: 'linear-gradient(135deg, #dc2626 0%, #9333ea 100%)',
+    bgColor: 'linear-gradient(135deg, #dc2626 0%, #15803d 100%)',
     component: '/games/connect-four',
     xpReward: 160,
     coinReward: 65,

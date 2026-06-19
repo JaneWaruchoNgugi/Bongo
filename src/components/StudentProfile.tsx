@@ -1,10 +1,13 @@
-import React, {useState, useRef} from 'react';
+import React, {useEffect, useState, useRef} from 'react';
 import {useStore, type EducationLevel} from '../store/useStore';
 import {useNavigate} from 'react-router-dom';
 import {Trophy, Settings, Zap, Flame, Star, CheckCircle, Shield, Users, Camera, LogOut} from 'lucide-react';
 import '../styles/profile.css';
 import {LEVEL_CONFIG} from '../hooks/LevelConfigs';
 import {avatarUrl, AVATARS} from '../hooks/Packages.ts';
+import {subscribeProgress, type ProgressDoc} from '../lib/learn';
+import {levelInfo} from '../lib/gamification';
+import {evaluateAchievements} from '../lib/achievements';
 
 const LEVEL_OPTIONS = [
     {id: 'lower_primary' as EducationLevel, ...LEVEL_CONFIG.lower_primary},
@@ -12,17 +15,8 @@ const LEVEL_OPTIONS = [
     {id: 'senior_school' as EducationLevel, ...LEVEL_CONFIG.senior_school},
 ];
 
-const ACHIEVEMENTS = [
-    {emoji: '🔥', title: 'First Streak', desc: '7 days in a row', pts: 50, earned: true},
-    {emoji: '🏆', title: 'Quiz Master', desc: 'Score 100% on 5 quizzes', pts: 200, earned: true},
-    {emoji: '🧮', title: 'Math Wizard', desc: 'Complete all math topics', pts: 150, earned: false},
-    {emoji: '⚡', title: 'Speed Demon', desc: 'Finish a quiz < 2 min', pts: 100, earned: true},
-    {emoji: '📚', title: 'Bookworm', desc: 'Read 50 lessons', pts: 120, earned: false},
-    {emoji: '🌟', title: 'Top Performer', desc: 'Rank #1 for a week', pts: 300, earned: false},
-];
-
 const StudentProfile: React.FC = () => {
-    const {isLoggedIn, user, updateUser, setOverlay} = useStore();
+    const {isLoggedIn, user, accountId, updateUser, setOverlay} = useStore();
     const navigate = useNavigate();
 
     const activeProfile = user ? (user.profiles.find(p => p.id === user.activeProfileId) ?? user.profiles[0]) : null;
@@ -31,7 +25,14 @@ const StudentProfile: React.FC = () => {
     const [editName, setEditName] = useState(activeProfile?.username ?? '');
     const [saveMsg, setSaveMsg] = useState('');
     const [error, setError] = useState('');
+    const [progress, setProgress] = useState<ProgressDoc>({});
     const fileRef = useRef<HTMLInputElement>(null);
+
+    // XP / streak / badges live in the per-profile progress doc (single source of truth).
+    useEffect(() => {
+        if (!accountId || !activeProfile) return;
+        return subscribeProgress(accountId, activeProfile.id, setProgress);
+    }, [accountId, activeProfile?.id]); // eslint-disable-line react-hooks/exhaustive-deps
 
     if (!isLoggedIn || !user || !activeProfile) {
         return (
@@ -45,19 +46,54 @@ const StudentProfile: React.FC = () => {
     }
 
     const lvl = LEVEL_OPTIONS.find(l => l.id === activeProfile.educationLevel)!;
-    const xpPercent = (activeProfile.xp % 1000) / 10;
-    const earnedAch = ACHIEVEMENTS.filter(a => a.earned).length;
-    const earnedXP = ACHIEVEMENTS.filter(a => a.earned).reduce((s, a) => s + a.pts, 0);
+    const xp = progress.xp ?? 0;
+    const streak = progress.streak ?? 0;
+    const li = levelInfo(xp);
+    const achievements = evaluateAchievements(progress);
+    const earnedAch = achievements.filter(a => a.unlocked).length;
 
     const saveAvatar = (avatar: string) =>
         updateUser({profiles: user.profiles.map(p => p.id === activeProfile.id ? {...p, avatar} : p)});
 
-    const handleUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    // Downscale + compress to a small JPEG so the photo fits comfortably in the
+    // Firestore account document (which has a 1 MB limit) and loads fast.
+    const compressImage = (file: File, max = 256): Promise<string> =>
+        new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onerror = reject;
+            reader.onload = () => {
+                const img = new Image();
+                img.onerror = reject;
+                img.onload = () => {
+                    const scale = Math.min(1, max / Math.max(img.width, img.height));
+                    const w = Math.round(img.width * scale);
+                    const h = Math.round(img.height * scale);
+                    const canvas = document.createElement('canvas');
+                    canvas.width = w; canvas.height = h;
+                    const ctx = canvas.getContext('2d');
+                    if (!ctx) { reject(new Error('no-canvas')); return; }
+                    ctx.drawImage(img, 0, 0, w, h);
+                    resolve(canvas.toDataURL('image/jpeg', 0.82));
+                };
+                img.src = reader.result as string;
+            };
+            reader.readAsDataURL(file);
+        });
+
+    const handleUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
         if (!file) return;
-        const reader = new FileReader();
-        reader.onload = () => saveAvatar(reader.result as string);
-        reader.readAsDataURL(file);
+        setError('');
+        try {
+            const dataUrl = await compressImage(file);
+            saveAvatar(dataUrl); // persisted to Firestore via updateUser → patchAccount
+            setSaveMsg('Photo updated!');
+            setTimeout(() => setSaveMsg(''), 2000);
+        } catch {
+            setError('Could not process that image. Try another one.');
+        } finally {
+            e.target.value = ''; // allow re-selecting the same file
+        }
     };
 
     const handleSave = () => {
@@ -89,7 +125,7 @@ const StudentProfile: React.FC = () => {
             {/*</div>*/}
 
 
-            <div className="pr-hero" style={{background: lvl.bg}}>
+            <div className="pr-hero" style={{background: 'linear-gradient(135deg, #0f5132 0%, #157347 55%, #2f9e6a 100%)'}}>
                 <div className="pr-hero-orb"/>
                 <div className="pr-hero-inner">
                     <div className="pr-hero-avatar pr-hero-avatar--clickable" onClick={() => setTab('account')}>
@@ -101,21 +137,20 @@ const StudentProfile: React.FC = () => {
                         <h1 className="pr-hero-name">{activeProfile.username}</h1>
                         <span className="pr-hero-level">{lvl.emoji} {lvl.label} · Grade {activeProfile.grade}</span>
                         <div className="pr-hero-pills">
-                            <span className="pr-pill"><Flame size={12}/> {activeProfile.streak}d streak</span>
-                            <span className="pr-pill"><Zap size={12}/> {activeProfile.xp} XP</span>
-                            <span className="pr-pill"><Star
-                                size={12}/> {activeProfile.points.toLocaleString()} pts</span>
+                            <span className="pr-pill"><Flame size={12}/> {streak}d streak</span>
+                            <span className="pr-pill"><Zap size={12}/> {xp} XP</span>
+                            <span className="pr-pill"><Star size={12}/> {earnedAch} badges</span>
                         </div>
                     </div>
                 </div>
 
                 <div className="pr-hero-xp">
                     <div className="pr-hero-xp-labels">
-                        <span>Level {activeProfile.level}</span>
-                        <span>{activeProfile.xp % 1000} / 1000 XP</span>
+                        <span>Level {li.level}</span>
+                        <span>{li.inLevel} / {li.need} XP</span>
                     </div>
                     <div className="pr-hero-xp-track">
-                        <div className="pr-hero-xp-fill" style={{width: `${xpPercent}%`}}/>
+                        <div className="pr-hero-xp-fill" style={{width: `${li.pct}%`}}/>
                     </div>
                 </div>
 
@@ -150,22 +185,23 @@ const StudentProfile: React.FC = () => {
                 {tab === 'badges' && (
                     <div className="pr-badges">
                         <div className="pr-badges-summary">
-                            <span className="pr-bs-text">🏆 {earnedAch} of {ACHIEVEMENTS.length} badges earned</span>
-                            <span className="pr-bs-xp">+{earnedXP} XP</span>
+                            <span className="pr-bs-text">🏆 {earnedAch} of {achievements.length} badges earned</span>
+                            <span className="pr-bs-xp">{xp} XP</span>
                         </div>
                         <div className="pr-ach-list">
-                            {ACHIEVEMENTS.map((a, i) => (
-                                <div key={i} className={`pr-ach-item ${a.earned ? 'earned' : 'locked'}`}>
+                            {achievements.map(a => (
+                                <div key={a.id} className={`pr-ach-item ${a.unlocked ? 'earned' : 'locked'}`}>
                                     <div className="pr-ach-emoji-wrap">
-                                        <span className="pr-ach-emoji">{a.emoji}</span>
-                                        {!a.earned && <span className="pr-ach-lock">🔒</span>}
+                                        <span className="pr-ach-emoji">{a.icon}</span>
+                                        {!a.unlocked && <span className="pr-ach-lock">🔒</span>}
                                     </div>
                                     <div className="pr-ach-body">
                                         <span className="pr-ach-title">{a.title}</span>
                                         <span className="pr-ach-desc">{a.desc}</span>
                                     </div>
-                                    <span className={`pr-ach-xp ${a.earned ? 'earned' : ''}`}>+{a.pts} XP</span>
-                                    {a.earned && <CheckCircle size={16} color="#10b981"/>}
+                                    {a.unlocked
+                                        ? <CheckCircle size={18} color="#157347"/>
+                                        : <span className="pr-ach-xp">{Math.min(a.current, a.goal)}/{a.goal}</span>}
                                 </div>
                             ))}
                         </div>

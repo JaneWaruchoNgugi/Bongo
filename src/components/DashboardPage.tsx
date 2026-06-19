@@ -13,7 +13,7 @@ import { avatarUrl } from '../hooks/Packages.ts';
 const LEVEL_META: Record<string, { label: string; grades: string; emoji: string; color: string }> = {
     lower_primary: { label: 'Lower Primary', grades: 'Grade 1–3',   emoji: '🧒', color: '#10b981' },
     middle_school:  { label: 'Middle School',  grades: 'Grade 4–9',   emoji: '🧠', color: '#3b82f6' },
-    senior_school:  { label: 'Senior School',  grades: 'Grade 10–12', emoji: '🎓', color: '#a855f7' },
+    senior_school:  { label: 'Senior School',  grades: 'Grade 10–12', emoji: '🎓', color: '#2f9e6a' },
 };
 //
 // const LEVEL_ROUTE: Record<string, string> = {
@@ -73,7 +73,7 @@ const StudentDetail: React.FC<{
 
             <div className="db-stats-grid">
                 {[
-                    { icon: Target, color: '#a855f7', bg: '#f5f3ff', val: `${avgScore}%`,        lbl: 'Avg Score' },
+                    { icon: Target, color: '#2f9e6a', bg: '#eef7f1', val: `${avgScore}%`,        lbl: 'Avg Score' },
                     { icon: Zap,    color: '#10b981', bg: '#f0fdf4', val: `${profile.xp} XP`,    lbl: 'Total XP' },
                     { icon: Flame,  color: '#ef4444', bg: '#fef2f2', val: `${profile.streak}d`,  lbl: 'Streak' },
                     { icon: Award,  color: '#f59e0b', bg: '#fffbeb', val: `Lv. ${profile.level}`, lbl: 'Level' },
@@ -224,10 +224,10 @@ const StudentDashboard: React.FC<{ profile: StudentProfile }> = ({ profile }) =>
 
             <div className="db-stats-grid">
                 {[
-                    { icon: Target,      color: '#a855f7', bg: '#f5f3ff', val: `${avgScore}%`,        lbl: 'Avg Score' },
+                    { icon: Target,      color: '#2f9e6a', bg: '#eef7f1', val: `${avgScore}%`,        lbl: 'Avg Score' },
                     { icon: CheckCircle, color: '#10b981', bg: '#f0fdf4', val: totalQ,                lbl: 'Quizzes Taken' },
                     { icon: Flame,       color: '#ef4444', bg: '#fef2f2', val: `${profile.streak} days`, lbl: 'Streak' },
-                    { icon: Zap,         color: '#8b5cf6', bg: '#f5f3ff', val: `${profile.xp} XP`,    lbl: 'Total XP' },
+                    { icon: Zap,         color: '#8b5cf6', bg: '#eef7f1', val: `${profile.xp} XP`,    lbl: 'Total XP' },
                 ].map(({ icon: Icon, color, bg, val, lbl }) => (
                     <div key={lbl} className="db-stat-card">
                         <div className="db-stat-icon" style={{ background: bg }}><Icon size={22} color={color} /></div>
@@ -330,7 +330,7 @@ const MultiProfileDashboard: React.FC<{ profiles: StudentProfile[] }> = ({ profi
 
             <div className="db-stats-grid">
                 {[
-                    { icon: Users,      color: '#7c3aed', bg: '#f5f3ff', val: profiles.length,   lbl: 'Students' },
+                    { icon: Users,      color: '#157347', bg: '#eef7f1', val: profiles.length,   lbl: 'Students' },
                     { icon: Zap,        color: '#10b981', bg: '#f0fdf4', val: totalXP,           lbl: 'Total XP' },
                     { icon: Flame,      color: '#ef4444', bg: '#fef2f2', val: activeStreaks,      lbl: 'Active Streaks' },
                     { icon: TrendingUp, color: '#f59e0b', bg: '#fffbeb', val: `Lv. ${avgLevel}`, lbl: 'Avg Level' },

@@ -39,7 +39,7 @@ const PinInput: React.FC<{ value: string; onChange: (v: string) => void; hasErro
 };
 
 const LoginOverlay: React.FC = () => {
-  const { setOverlay, login, allUsers } = useStore();
+  const { setOverlay, signin } = useStore();
   const navigate = useNavigate();
 
   const [phone, setPhone] = useState('');
@@ -47,7 +47,7 @@ const LoginOverlay: React.FC = () => {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
-  const handleLogin = () => {
+  const handleLogin = async () => {
     setError('');
     const cleanPhone = phone.replace(/\s/g, '');
     if (!cleanPhone) { setError('Enter your phone number'); return; }
@@ -57,28 +57,20 @@ const LoginOverlay: React.FC = () => {
     if (pin.length !== 4) { setError('Enter your 4-digit PIN'); return; }
 
     setLoading(true);
-    setTimeout(() => {
-      const found = allUsers.find(u => u.phone === cleanPhone);
-      if (!found) { setError('No account found for this number'); setLoading(false); return; }
-      if (found.pin !== pin) { setError('Incorrect PIN'); setLoading(false); return; }
-
-      login(found);
-      setLoading(false);
+    try {
+      const { package: pkg, profiles } = await signin(cleanPhone, pin);
       setOverlay(null);
-
-      // Solo package: go straight to their level
-      if (found.package === 'solo' && found.profiles.length === 1) {
-        const routes: Record<string, string> = {
-          lower_primary: '/level/lower-primary',
-          middle_school: '/level/middle-school',
-          senior_school: '/level/senior-school',
-        };
-        navigate(routes[found.profiles[0].educationLevel] ?? '/');
+      if (pkg === 'solo' && profiles.length === 1) {
+        navigate('/home');
       } else {
-        // Multi-profile: show profile select
         setOverlay('profile-select');
       }
-    }, 700);
+    } catch (e) {
+      const message = (e as { message?: string }).message ?? '';
+      setError(message || 'Login failed. Please try again.');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (

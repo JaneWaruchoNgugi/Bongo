@@ -7,9 +7,10 @@ import LowerPrimary from '../assets/banners/LowerPrimaryb.png';
 import MiddleSchool from '../assets/banners/middle-school.png';
 import SeniorSchool from '../assets/banners/seniorschool.png';
 import {
-  ChevronRight, ArrowRight, BarChart3, Clock, Users, Star, Shield, TrendingUp, Flame
+  ChevronRight, ArrowRight, BarChart3, Clock, Users, Star, Shield, TrendingUp, Flame,
+  UserPlus, Target, Gamepad2, Trophy, HelpCircle, Quote
 } from 'lucide-react';
-import Footer from './Footer';
+import type { LucideIcon } from 'lucide-react';
 import '../styles/landing.css';
 import '../styles/exambrowser.css';
 import '../styles/landing-loggedin.css';
@@ -19,17 +20,17 @@ import {LEVEL_CONFIG} from "../hooks/LevelConfigs.ts";
 import {PACKAGES, avatarUrl, AVATARS} from "../hooks/Packages.ts";
 
 
-const HOW_IT_WORKS = [
-  { step: '1', emoji: '📱', title: 'Sign Up Free',    desc: 'Create your account in 30 seconds with just a phone number.', color: '#10b981' },
-  { step: '2', emoji: '🎯', title: 'Pick Your Level', desc: 'Choose Lower Primary, Middle School, or Senior School.',       color: '#3b82f6' },
-  { step: '3', emoji: '📝', title: 'Practice & Play', desc: 'Take quizzes, mock exams, and fun games — all CBC aligned.',   color: '#f59e0b' },
-  { step: '4', emoji: '🏆', title: 'Track Progress',  desc: 'Earn XP, badges, and watch your grades improve.',              color: '#a855f7' },
+const HOW_IT_WORKS: { step: string; icon: LucideIcon; title: string; desc: string; color: string }[] = [
+  { step: '1', icon: UserPlus, title: 'Sign Up Free',    desc: 'Create your account in 30 seconds with just a phone number.', color: '#10b981' },
+  { step: '2', icon: Target,   title: 'Pick Your Level', desc: 'Choose Lower Primary, Middle School, or Senior School.',       color: '#7c3aed' },
+  { step: '3', icon: Gamepad2, title: 'Practice & Play', desc: 'Take quizzes, mock exams, and fun games — all CBC aligned.',   color: '#f59e0b' },
+  { step: '4', icon: Trophy,   title: 'Track Progress',  desc: 'Earn XP, badges, and watch your grades improve.',              color: '#2f9e6a' },
 ];
 
 const TESTIMONIALS = [
   { name: 'Amina W.', grade: 'Grade 8 · Nairobi',  text: 'My daughter went from a C to a B+ in Maths in just one term. GradeUp makes revision feel like a game!', avatar: 'Amina', color: '#10b981' },
   { name: 'Peter K.', grade: 'Grade 11 · Kisumu',  text: 'The mock exams are exactly like the real thing. I feel so much more confident going into my finals.',       avatar: 'Kofi',  color: '#3b82f6' },
-  { name: 'Grace M.', grade: 'Grade 4 · Mombasa',  text: 'My son actually asks to do his homework now. The streaks and badges keep him motivated every day.',          avatar: 'Zawadi',color: '#a855f7' },
+  { name: 'Grace M.', grade: 'Grade 4 · Mombasa',  text: 'My son actually asks to do his homework now. The streaks and badges keep him motivated every day.',          avatar: 'Zawadi',color: '#2f9e6a' },
 ];
 
 const FAQS = [
@@ -40,7 +41,7 @@ const FAQS = [
 ];
 
 const FEATURES = [
-  { icon: Shield,     title: 'CBC Aligned',       desc: 'Every question follows the official Kenyan CBC curriculum.',    color: '#a855f7' },
+  { icon: Shield,     title: 'CBC Aligned',       desc: 'Every question follows the official Kenyan CBC curriculum.',    color: '#2f9e6a' },
   { icon: BarChart3,  title: 'Track Progress',     desc: 'Detailed analytics show exactly where you excel.',              color: '#3b82f6' },
   { icon: Flame,      title: 'Gamified Learning',  desc: 'Earn XP, level up, climb the leaderboard — revision is fun.',  color: '#ef4444' },
   { icon: Clock,      title: 'Mock Exams',         desc: 'Real exam conditions with timers. Build speed and confidence.', color: '#f59e0b' },
@@ -51,7 +52,7 @@ const FEATURES = [
 const SLIDES = [
   {
     id: 'lower', img: LowerPrimary, grade: 'Grade 1–3', tag: '🧒',
-    // bg: 'linear-gradient(135deg, #7c3aed 0%, #a855f7 60%, #c084fc 100%)',
+    // bg: 'linear-gradient(135deg, #157347 0%, #2f9e6a 60%, #c084fc 100%)',
   },
   {
     id: 'middle', img: MiddleSchool, grade: 'Grade 4–9', tag: '🧠',
@@ -151,11 +152,15 @@ const GuestHero: React.FC = () => {
                         onClick={() => setOverlay('signup', pkg.id)}
                     >
                       {pkg.popular && <div className="gh-pricing-badge">⭐ Most Popular</div>}
-                      <div className="gh-pricing-icon" style={{ background: `${pkg.color}22`, color: pkg.color }}>
-                        <Icon size={28} />
+                      <div className="gh-pricing-head">
+                        <div className="gh-pricing-icon" style={{ background: `${pkg.color}1f`, color: pkg.color }}>
+                          <Icon size={22} />
+                        </div>
+                        <div className="gh-pricing-head-text">
+                          <div className="gh-pricing-label">{pkg.label}</div>
+                          <div className="gh-pricing-subtitle">{pkg.subtitle}</div>
+                        </div>
                       </div>
-                      <div className="gh-pricing-label">{pkg.label}</div>
-                      <div className="gh-pricing-subtitle">{pkg.subtitle}</div>
                       <div className="gh-pricing-price">
                         <span className="gh-pricing-amount">{pkg.price}</span>
                         <span className="gh-pricing-period">{pkg.period}</span>
@@ -179,12 +184,16 @@ const GuestHero: React.FC = () => {
               <h2 className="gh-section-title">Up and running in <span className="gh-text-gradient">minutes</span></h2>
             </div>
             <div className="gh-how-grid">
-              {HOW_IT_WORKS.map((item, i) => (
-                <div key={item.step} className="gh-how-card reveal" style={{ '--how-color': item.color, transitionDelay: `${i * 0.1}s` } as React.CSSProperties}>
-                  <div className="gh-how-step" style={{ background: item.color }}>{item.step}</div>
-                  <div className="gh-how-emoji">{item.emoji}</div>
-                  <h3 className="gh-how-title">{item.title}</h3>
-                  <p className="gh-how-desc">{item.desc}</p>
+              {HOW_IT_WORKS.map(({ step, icon: Icon, title, desc, color }, i) => (
+                <div key={step} className="gh-how-card reveal" style={{ '--how-color': color, transitionDelay: `${i * 0.1}s` } as React.CSSProperties}>
+                  <div className="gh-how-head">
+                    <div className="gh-how-icon" style={{ background: `${color}1f`, color }}>
+                      <Icon size={22} />
+                    </div>
+                    <span className="gh-how-step" style={{ color }}>Step {step}</span>
+                  </div>
+                  <h3 className="gh-how-title">{title}</h3>
+                  <p className="gh-how-desc">{desc}</p>
                 </div>
               ))}
             </div>
@@ -221,9 +230,15 @@ const GuestHero: React.FC = () => {
             <div className="gh-testimonials-grid">
               {TESTIMONIALS.map((t, i) => (
                 <div key={t.name} className="gh-testimonial-card reveal" style={{ '--t-color': t.color, transitionDelay: `${i * 0.12}s` } as React.CSSProperties}>
-                  <p className="gh-testimonial-text">"{t.text}"</p>
+                  <Quote size={28} className="gh-testimonial-quote" style={{ color: t.color }} />
+                  <div className="gh-testimonial-stars" aria-label="5 out of 5 stars">
+                    {Array.from({ length: 5 }).map((_, s) => (
+                      <Star key={s} size={15} fill="#f59e0b" stroke="#f59e0b" />
+                    ))}
+                  </div>
+                  <p className="gh-testimonial-text">{t.text}</p>
                   <div className="gh-testimonial-author">
-                    <img src={avatarUrl(t.avatar)} alt={t.name} width={40} height={40} className="gh-testimonial-avatar" style={{ border: `2px solid ${t.color}66` }} />
+                    <img src={avatarUrl(t.avatar)} alt={t.name} width={44} height={44} className="gh-testimonial-avatar" style={{ border: `2px solid ${t.color}66` }} />
                     <div>
                       <span className="gh-testimonial-name">{t.name}</span>
                       <span className="gh-testimonial-grade">{t.grade}</span>
@@ -243,7 +258,10 @@ const GuestHero: React.FC = () => {
             <div className="gh-faq-list">
               {FAQS.map((f, i) => (
                 <details key={f.q} className="gh-faq-item reveal" style={{ transitionDelay: `${i * 0.08}s` }}>
-                  <summary className="gh-faq-q">{f.q}</summary>
+                  <summary className="gh-faq-q">
+                    <HelpCircle size={18} className="gh-faq-q-icon" />
+                    <span className="gh-faq-q-text">{f.q}</span>
+                  </summary>
                   <p className="gh-faq-a">{f.a}</p>
                 </details>
               ))}
@@ -413,7 +431,6 @@ const LandingPage: React.FC = () => {
   return (
       <main>
         {isLoggedIn ? <LoggedInHero /> : <GuestHero />}
-        <Footer />
       </main>
   );
 };

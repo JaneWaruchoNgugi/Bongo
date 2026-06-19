@@ -17,7 +17,7 @@ interface ConfettiProps {
 
 const SHAPES: string[] = ["■", "●", "▲", "◆", "★", "✦", "♦"];
 const SHADES: string[] = [
-    "#6c3fc5", "#8b5cf6", "#a78bfa", "#c4b5fd",
+    "#6c3fc5", "#8b5cf6", "#5fae84", "#c4b5fd",
     "#ec4899", "#f59e0b", "#10b981", "#3b82f6",
     "#f472b6", "#fbbf24",
 ];

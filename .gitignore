@@ -12,6 +12,17 @@ dist
 dist-ssr
 *.local
 
+# Local env files (keep .env.example tracked)
+.env
+.env.*
+!.env.example
+
+# Firebase
+.firebase
+firebase-debug.log
+functions/node_modules
+functions/lib
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

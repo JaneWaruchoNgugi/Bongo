@@ -4,7 +4,7 @@ import '../styles/shimmer.css';
 import bibleQuizBanner from '../assets/GameBanners/BibleQuizb.png';
 import KiswahiliB from '../assets/GameBanners/kiswahilib.png';
 import ConnectFour from '../assets/GameBanners/connectfourb.png';
-import BongoQuiz from '../assets/GameBanners/bongoquizb.png';
+import BongoQuiz from '../assets/Games/bongoquiz.png';
 import Sudoku from '../assets/GameBanners/sudokub.png';
 import checkers from '../assets/GameBanners/checkers-banner.png';
 import chessbanner from '../assets/GameBanners/chess-banner.png';

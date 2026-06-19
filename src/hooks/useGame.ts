@@ -58,7 +58,7 @@ export const useGame = (): UseGameReturn => {
       popular:      { label: 'POPULAR',      color: '#fff',    bg: '#3b82f6' },
       hot:          { label: '🔥 HOT',       color: '#fff',    bg: '#ef4444' },
       coming_soon:  { label: 'COMING SOON',  color: '#fff',    bg: '#6b7280' },
-      math:         { label: 'MATH',         color: '#fff',    bg: '#7c3aed' },
+      math:         { label: 'MATH',         color: '#fff',    bg: '#157347' },
       english:      { label: 'ENGLISH',      color: '#fff',    bg: '#2563eb' },
       science:      { label: 'SCIENCE',      color: '#fff',    bg: '#059669' },
       puzzle:       { label: 'PUZZLE',       color: '#fff',    bg: '#d97706' },

@@ -1,5 +1,15 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
+import { onAuthStateChanged, type Unsubscribe } from 'firebase/auth';
+import { auth } from '../lib/firebase';
+import {
+  loginAccount,
+  logoutAccount,
+  patchAccount,
+  signupAccount,
+  subscribeAccount,
+  type AccountDoc,
+} from '../lib/studentAuth';
 
 /* ── Theme store ─────────────────────────────────────────── */
 interface ThemeState {
@@ -31,11 +41,11 @@ export interface LevelSelections {
 }
 
 export interface StudentProfile {
-  id: string;           // unique id within the account
+  id: string;
   username: string;
   educationLevel: EducationLevel;
-  grade: number;        // 1–12
-  pin: string;          // 4-digit profile PIN
+  grade: number;
+  pin: string;
   avatar: string;
   xp: number;
   level: number;
@@ -45,41 +55,52 @@ export interface StudentProfile {
 
 export interface StudentUser {
   type: 'student';
-  phone: string;        // account phone number (parent's or student's own)
-  pin: string;          // account-level PIN used at login
+  phone: string;
+  pin: string; // not used client-side (auth is server-side); kept for type compatibility
   package: FamilyPackage;
-  profiles: StudentProfile[];  // 1 profile for solo, up to N for others
+  profiles: StudentProfile[];
   activeProfileId: string | null;
 }
 
 export type AppUser = StudentUser;
 export type Overlay = null | 'signup' | 'login' | 'profile-select';
 
-// { [phone]: { attempts: number; lockoutUntil: number | null } }
-export type LoginAttempts = Record<string, { attempts: number; lockoutUntil: number | null }>;
-
 interface AppState {
   overlay: Overlay;
   signupPackage: FamilyPackage | null;
   user: AppUser | null;
-  allUsers: AppUser[];
   isLoggedIn: boolean;
-  sessionToken: string | null;   // runtime-only, not persisted
+  authReady: boolean; // false until the first Firebase auth callback resolves
+  accountId: string | null;
   levelSelections: LevelSelections;
-  loginAttempts: LoginAttempts;
+  /** Learner sidebar drawer (mobile) — toggled from the top navbar. */
+  learnerMenuOpen: boolean;
 
   setOverlay: (overlay: Overlay, pkg?: FamilyPackage | null) => void;
-  login: (user: AppUser) => void;
-  logout: () => void;
-  registerUser: (user: AppUser) => void;
+  setLearnerMenu: (open: boolean) => void;
+  setLevelSelection: (level: keyof LevelSelections, value: LevelSelections[keyof LevelSelections]) => void;
+
+  /** Wire up the Firebase auth listener (call once at app start). */
+  bootstrap: () => void;
+  signup: (phone: string, pin: string, pkg: FamilyPackage) => Promise<void>;
+  signin: (phone: string, pin: string) => Promise<{ package: FamilyPackage; profiles: StudentProfile[] }>;
+  logout: () => Promise<void>;
   setActiveProfile: (profileId: string) => void;
   updateUser: (updates: Partial<AppUser>) => void;
-  findUserByPhone: (phone: string) => AppUser | undefined;
-  setLevelSelection: (level: keyof LevelSelections, value: LevelSelections[keyof LevelSelections]) => void;
-  recordFailedAttempt: (phone: string) => void;
-  clearAttempts: (phone: string) => void;
-  getAttemptInfo: (phone: string) => { attempts: number; lockoutUntil: number | null };
 }
+
+const accountToUser = (data: AccountDoc): AppUser => ({
+  type: 'student',
+  phone: data.phone,
+  pin: '',
+  package: data.package,
+  profiles: data.profiles ?? [],
+  activeProfileId: data.activeProfileId ?? null,
+});
+
+// Module-level subscriptions so bootstrap is idempotent.
+let authUnsub: Unsubscribe | null = null;
+let acctUnsub: Unsubscribe | null = null;
 
 export const useStore = create<AppState>()(
   persist(
@@ -87,80 +108,78 @@ export const useStore = create<AppState>()(
       overlay: null,
       signupPackage: null,
       user: null,
-      allUsers: [],
       isLoggedIn: false,
-      sessionToken: null,
+      authReady: false,
+      accountId: null,
       levelSelections: {},
-      loginAttempts: {},
+      learnerMenuOpen: false,
 
       setOverlay: (overlay, pkg = null) => set({ overlay, signupPackage: pkg }),
-
-      login: (user) => set({ user, isLoggedIn: true, sessionToken: crypto.randomUUID() }),
-
-      logout: () => set({ user: null, isLoggedIn: false, overlay: null, sessionToken: null }),
-
-      registerUser: (newUser) =>
-        set((state) => ({ allUsers: [...state.allUsers, newUser] })),
-
-      setActiveProfile: (profileId) =>
-        set((state) => {
-          if (!state.user) return {};
-          const updated = { ...state.user, activeProfileId: profileId };
-          return {
-            user: updated,
-            allUsers: state.allUsers.map((u) =>
-              u.phone === state.user!.phone ? updated : u
-            ),
-          };
-        }),
-
-      updateUser: (updates) =>
-        set((state) => ({
-          user: state.user ? { ...state.user, ...updates } as AppUser : null,
-          allUsers: state.allUsers.map((u) =>
-            state.user && u.phone === state.user.phone
-              ? { ...u, ...updates } as AppUser
-              : u
-          ),
-        })),
-
-      findUserByPhone: (phone) =>
-        get().allUsers.find((u) => u.phone === phone),
+      setLearnerMenu: open => set({ learnerMenuOpen: open }),
 
       setLevelSelection: (level, value) =>
-        set((state) => ({
-          levelSelections: { ...state.levelSelections, [level]: value },
-        })),
+        set(state => ({ levelSelections: { ...state.levelSelections, [level]: value } })),
 
-      recordFailedAttempt: (phone) =>
-        set((state) => {
-          const prev = state.loginAttempts[phone] ?? { attempts: 0, lockoutUntil: null };
-          const attempts = prev.attempts + 1;
-          const lockoutUntil = attempts >= 5 ? Date.now() + 5 * 60 * 1000 : null; // 5 min lockout after 5 fails
-          return { loginAttempts: { ...state.loginAttempts, [phone]: { attempts, lockoutUntil } } };
-        }),
+      bootstrap: () => {
+        if (authUnsub) return; // already wired
+        authUnsub = onAuthStateChanged(auth, current => {
+          acctUnsub?.();
+          acctUnsub = null;
 
-      clearAttempts: (phone) =>
-        set((state) => {
-          const { [phone]: _, ...rest } = state.loginAttempts;
-          return { loginAttempts: rest };
-        }),
+          // Anonymous (chat) sessions and signed-out users are not students.
+          if (!current || current.isAnonymous) {
+            set({ user: null, isLoggedIn: false, accountId: null, authReady: true });
+            return;
+          }
 
-      getAttemptInfo: (phone) => {
-        const info = get().loginAttempts[phone];
-        return info ?? { attempts: 0, lockoutUntil: null };
+          set({ accountId: current.uid });
+          acctUnsub = subscribeAccount(current.uid, data => {
+            if (data) set({ user: accountToUser(data), isLoggedIn: true, authReady: true });
+            else set({ user: null, isLoggedIn: false, authReady: true }); // e.g. an admin session
+          });
+        });
+      },
+
+      signup: async (phone, pin, pkg) => {
+        await signupAccount(phone, pin, pkg);
+        // auth listener + account subscription populate `user`
+      },
+
+      signin: async (phone, pin) => {
+        const { package: pkg, profiles } = await loginAccount(phone, pin);
+        return { package: pkg, profiles };
+      },
+
+      logout: async () => {
+        await logoutAccount();
+        set({ user: null, isLoggedIn: false, accountId: null, overlay: null });
+      },
+
+      setActiveProfile: profileId => {
+        const { user, accountId } = get();
+        if (!user) return;
+        set({ user: { ...user, activeProfileId: profileId } });
+        if (accountId) patchAccount(accountId, { activeProfileId: profileId }).catch(() => {});
+      },
+
+      updateUser: updates => {
+        const { user, accountId } = get();
+        if (!user) return;
+        const merged = { ...user, ...updates } as AppUser;
+        set({ user: merged });
+        if (accountId) {
+          patchAccount(accountId, {
+            profiles: merged.profiles,
+            activeProfileId: merged.activeProfileId,
+            package: merged.package,
+          }).catch(() => {});
+        }
       },
     }),
     {
-      name: 'gradeup-v3',
-      partialize: (state) => ({
-        user: state.user,
-        allUsers: state.allUsers,
-        isLoggedIn: state.isLoggedIn,
-        levelSelections: state.levelSelections,
-        loginAttempts: state.loginAttempts,
-        // sessionToken intentionally excluded — not persisted
-      }),
+      name: 'gradeup-v4',
+      // Firebase is the source of truth for auth; only persist UI selections.
+      partialize: state => ({ levelSelections: state.levelSelections }),
     }
   )
 );

@@ -38,7 +38,7 @@ const PinInput: React.FC<{ value: string; onChange: (v: string) => void; hasErro
 };
 
 const SignUpOverlay: React.FC = () => {
-  const { setOverlay, registerUser, login, allUsers, signupPackage } = useStore();
+  const { setOverlay, signup, signupPackage } = useStore();
   // const navigate = useNavigate();
 
   // steps: 1=phone+pin, 2=otp, 3=package
@@ -60,9 +60,7 @@ const SignUpOverlay: React.FC = () => {
       setError('Enter a valid Kenyan number (e.g. 0712345678)'); return;
     }
     if (accountPin.length !== 4) { setError('Set a 4-digit PIN'); return; }
-    if (allUsers.find(u => u.phone === cleanPhone)) {
-      setError('This number is already registered'); return;
-    }
+    // Uniqueness is enforced server-side at sign-up; proceed to OTP step.
     setLoading(true);
     setTimeout(() => { setLoading(false); setStep(2); }, 800);
   };
@@ -84,18 +82,24 @@ const SignUpOverlay: React.FC = () => {
     handleFinish(selectedPackage);
   };
 
-  const handleFinish = (pkg: FamilyPackage) => {
-    const newUser = {
-      type: 'student' as const,
-      phone: cleanPhone,
-      pin: accountPin,
-      package: pkg,
-      profiles: [],
-      activeProfileId: null,
-    };
-    registerUser(newUser);
-    login(newUser);
-    setOverlay('profile-select');
+  const handleFinish = async (pkg: FamilyPackage) => {
+    setError('');
+    setLoading(true);
+    try {
+      await signup(cleanPhone, accountPin, pkg);
+      setOverlay('profile-select');
+    } catch (e) {
+      const code = (e as { code?: string }).code ?? '';
+      const message = (e as { message?: string }).message ?? '';
+      setError(
+        code.includes('already-exists') || message.includes('already registered')
+          ? 'This number is already registered.'
+          : message || 'Could not create your account. Please try again.'
+      );
+      setStep(1);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (

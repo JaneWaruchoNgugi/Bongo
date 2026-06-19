@@ -2,16 +2,28 @@ import React, { useState, useEffect } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useStore } from '../store/useStore';
 import { useThemeStore } from '../store/useStore';
-import { Home, Gamepad2, User, LogOut, Menu, X, GraduationCap, Sun, Moon } from 'lucide-react';
+import { Home, Gamepad2, User, LogOut, Menu, X, GraduationCap, Sun, Moon, BookOpen, ClipboardList } from 'lucide-react';
+import { subscribeProgress } from '../lib/learn';
 import '../styles/navbar.css';
 
 const Navbar: React.FC = () => {
-  const { isLoggedIn, user, setOverlay, logout } = useStore();
+  const { isLoggedIn, user, accountId, setOverlay, logout, learnerMenuOpen, setLearnerMenu } = useStore();
   const { theme, toggleTheme } = useThemeStore();
   const navigate = useNavigate();
   const location = useLocation();
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [navXp, setNavXp] = useState(0);
+
+  const activeProfileId = user?.activeProfileId ?? user?.profiles[0]?.id ?? null;
+  // XP lives in the per-profile progress doc (not the account profile), so read it live.
+  useEffect(() => {
+    if (!accountId || !activeProfileId) return;
+    return subscribeProgress(accountId, activeProfileId, d => setNavXp(d.xp ?? 0));
+  }, [accountId, activeProfileId]);
+
+  const LEARNER_PREFIXES = ['/home', '/learn', '/subjects', '/exams', '/revision', '/books', '/leaderboard', '/achievements', '/challenges', '/community', '/settings'];
+  const isLearner = isLoggedIn && LEARNER_PREFIXES.some(p => location.pathname === p || location.pathname.startsWith(p + '/'));
 
   // Apply persisted theme on mount
   useEffect(() => {
@@ -30,9 +42,10 @@ const Navbar: React.FC = () => {
 
   /* ── Bottom nav items (logged in) ──────────────────────── */
   const bottomItems = [
-    { path: '/home',          icon: Home,     label: 'Home',    exact: true },
-    { path: '/games',     icon: Gamepad2, label: 'Games',   exact: false },
-    { path: '/profile',   icon: User,     label: 'Profile', exact: false },
+    { path: '/home',      icon: Home,          label: 'Home',     exact: true },
+    { path: '/subjects',  icon: BookOpen,      label: 'Subjects', exact: false },
+    { path: '/exams',     icon: ClipboardList, label: 'Mock',     exact: false },
+    { path: '/profile',   icon: User,          label: 'Profile',  exact: false },
   ];
 
   return (
@@ -43,19 +56,23 @@ const Navbar: React.FC = () => {
           {/* Left: logo + hamburger on mobile */}
           <div className="nb-left">
             {/* Hamburger — mobile only */}
-            <button className="nb-hamburger" onClick={() => setMenuOpen(v => !v)} aria-label="Menu">
-              {menuOpen ? <X size={22} /> : <Menu size={22} />}
+            <button
+              className={`nb-hamburger${isLearner ? ' nb-hamburger--learner' : ''}`}
+              onClick={() => (isLearner ? setLearnerMenu(!learnerMenuOpen) : setMenuOpen(v => !v))}
+              aria-label="Menu"
+            >
+              {(isLearner ? learnerMenuOpen : menuOpen) ? <X size={22} /> : <Menu size={22} />}
             </button>
 
             <button className="nb-logo" onClick={() => { navigate('/'); setMenuOpen(false); }}>
-              <GraduationCap size={28} color="#7c3aed" />
+              <GraduationCap size={28} color="#157347" />
               <span>High<strong>Scores</strong></span>
             </button>
 
 
             {/* Desktop nav links */}
             <div className="nb-links">
-              <Link to="/" className={`nb-link ${location.pathname === '/home' || isActive('/level') ? 'active' : ''}`}>
+              <Link to="/" className={`nb-link ${location.pathname === '/home' || isActive('/learn') ? 'active' : ''}`}>
                 <Home size={17} /> Home
               </Link>
               <Link to="/games" className={`nb-link ${isActive('/games') ? 'active' : ''}`}>
@@ -91,7 +108,7 @@ const Navbar: React.FC = () => {
                     <span className="nb-student-name">{profile?.username}</span>
                     <div className="nb-student-info-grad-xp-container">
                       <span className="nb-student-badge">Grade {profile?.grade}</span>
-                      <span className="nb-student-xp">⚡ {profile?.xp ?? 0} XP</span>
+                      <span className="nb-student-xp">⚡ {navXp} XP</span>
                     </div>
                   </div>
                 </div>
@@ -112,7 +129,7 @@ const Navbar: React.FC = () => {
           <div className="nb-drawer-overlay" onClick={() => setMenuOpen(false)} />
           <div className="nb-drawer">
             <div className="nb-drawer-header">
-              <GraduationCap size={32} color="#7c3aed" />
+              <GraduationCap size={32} color="#157347" />
               <span>Highscores</span>
               <button className="nb-drawer-close" onClick={() => setMenuOpen(false)}><X size={20} /></button>
             </div>

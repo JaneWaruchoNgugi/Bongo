@@ -1,0 +1,82 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    /* ── Role helpers (custom claims set by the setStaffClaims function) ── */
+    function isStaff()   { return request.auth != null && request.auth.token.staff == true; }
+    function isAdmin()   { return isStaff() && request.auth.token.role == 'admin'; }
+    function isOwner(uid) { return request.auth != null && request.auth.uid == uid; }
+
+    /* ── Staff directory ── */
+    // Cloud Functions (admin SDK) bypass these rules when creating staff.
+    match /staff/{uid} {
+      allow read:  if isStaff();
+      allow write: if isAdmin();
+    }
+
+    /* ── Student accounts ── */
+    // Created by the studentSignup function (admin SDK bypasses rules).
+    // The owner (auth.uid == accountId, via custom token) reads/updates their
+    // own account; staff read all; admins have full write.
+    match /accounts/{id} {
+      allow read:   if isStaff() || (request.auth != null && request.auth.uid == id);
+      allow update: if isAdmin() || (request.auth != null && request.auth.uid == id);
+      allow create, delete: if isAdmin();
+
+      // Per-profile learning progress (subcollection) — owner & staff only.
+      match /{document=**} {
+        allow read, write: if isStaff() || (request.auth != null && request.auth.uid == id);
+      }
+    }
+
+    /* ── Support chat ── */
+    match /conversations/{cid} {
+      allow read:   if isStaff() || isOwner(resource.data.userUid);
+      // A visitor may open exactly one conversation tagged with their own uid.
+      allow create: if isOwner(request.resource.data.userUid);
+      // Owner may only reset their own unread badge; staff may manage freely.
+      allow update: if isStaff()
+                    || (isOwner(resource.data.userUid)
+                        && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['unreadForUser']));
+      allow delete: if isAdmin();
+
+      match /messages/{mid} {
+        function convOwner() {
+          return get(/databases/$(database)/documents/conversations/$(cid)).data.userUid;
+        }
+        allow read:   if isStaff() || isOwner(convOwner());
+        allow create: if isStaff() || isOwner(convOwner());
+        allow update, delete: if isAdmin();
+      }
+    }
+
+    /* ── Content (games, exams, questions, leaderboard, packages) ── */
+    // Publicly readable, only admins write (via panel or seed script).
+    match /games/{id}       { allow read: if true; allow write: if isAdmin(); }
+    match /subjects/{id}    { allow read: if true; allow write: if isAdmin(); }
+    match /topics/{id}      { allow read: if true; allow write: if isAdmin(); }
+    match /questions/{id}   { allow read: if true; allow write: if isAdmin(); }
+    // Students submit their own scores; admins moderate (feature/flag/delete).
+    match /leaderboard/{id} {
+      allow read:   if true;
+      allow create: if request.auth != null;
+      allow update, delete: if isAdmin();
+    }
+    match /packages/{id}    { allow read: if true; allow write: if isAdmin(); }
+    // Community feed: anyone may read; signed-in learners may post; admins moderate.
+    match /community/{id} {
+      allow read:   if true;
+      allow create: if request.auth != null
+                    && request.resource.data.text is string
+                    && request.resource.data.text.size() > 0
+                    && request.resource.data.text.size() <= 500;
+      allow update, delete: if isAdmin();
+    }
+    match /exams/{id} {
+      allow read: if true; allow write: if isAdmin();
+      match /questions/{qid} { allow read: if true; allow write: if isAdmin(); }
+    }
+
+    /* Everything else is denied by default. */
+  }
+}

@@ -1,15 +1,15 @@
 /* not-found.css */
 .nf-root {
   min-height: 100vh;
-  background: linear-gradient(160deg,#f5f3ff 0%,#faf5ff 55%,#ede9fe 100%);
+  background: linear-gradient(160deg,#eef7f1 0%,#f0f9f4 55%,#d9efe1 100%);
   display: flex; align-items: center; justify-content: center;
   padding: 2rem 1rem; position: relative; overflow: hidden;
 }
 
 .nf-card {
   background: #fff; border-radius: 28px;
-  border: 1px solid #ede9fe;
-  box-shadow: 0 12px 48px rgba(124,58,237,0.12);
+  border: 1px solid #d9efe1;
+  box-shadow: 0 12px 48px rgba(21,115,71,0.12);
   padding: 2.5rem 2rem; max-width: 460px; width: 100%;
   text-align: center; display: flex; flex-direction: column;
   align-items: center; gap: 1.1rem;
@@ -22,7 +22,7 @@
 
 .nf-four {
   font-size: 6rem; font-weight: 900; letter-spacing: -4px;
-  background: linear-gradient(135deg,#7c3aed,#a855f7);
+  background: linear-gradient(135deg,#157347,#2f9e6a);
   -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
   animation: nf-bounce 2.4s ease-in-out infinite;
 }
@@ -31,42 +31,42 @@
 
 .nf-zero {
   width:88px; height:88px; border-radius:50%;
-  background:linear-gradient(135deg,#ede9fe,#f5f3ff);
+  background:linear-gradient(135deg,#d9efe1,#eef7f1);
   border:4px solid #c4b5fd;
   display:flex; align-items:center; justify-content:center;
   animation:nf-bounce 2.4s ease-in-out 0.08s infinite;
-  box-shadow:0 6px 20px rgba(124,58,237,0.15);
+  box-shadow:0 6px 20px rgba(21,115,71,0.15);
 }
 .nf-zero-inner { font-size:2.5rem; line-height:1; }
 
 .nf-badge {
   display:inline-flex; align-items:center; gap:6px;
-  background:#faf5ff; color:#7c3aed;
+  background:#f0f9f4; color:#157347;
   border:1.5px solid #ddd6fe; border-radius:999px;
   padding:5px 14px; font-size:0.78rem; font-weight:700;
 }
 
-.nf-title    { font-size:1.5rem; font-weight:800; color:#1e1b4b; }
+.nf-title    { font-size:1.5rem; font-weight:800; color:#12241b; }
 .nf-subtitle { font-size:0.88rem; color:#6b7280; line-height:1.65; }
-.nf-path     { background:#f3f0ff; color:#7c3aed; padding:2px 8px; border-radius:6px; font-family:monospace; }
+.nf-path     { background:#f3f0ff; color:#157347; padding:2px 8px; border-radius:6px; font-family:monospace; }
 
 .nf-countdown-wrap {
   display:flex; align-items:center; gap:0.85rem;
-  background:#faf5ff; border:1.5px solid #ede9fe;
+  background:#f0f9f4; border:1.5px solid #d9efe1;
   border-radius:14px; padding:0.75rem 1.1rem; width:100%; justify-content:center;
 }
 
 .nf-countdown-ring {
   position:relative; width:44px; height:44px; border-radius:50%;
-  background:conic-gradient(#7c3aed calc(var(--pct)),#e9d5ff 0%);
+  background:conic-gradient(#157347 calc(var(--pct)),#c9ebd8 0%);
   display:flex; align-items:center; justify-content:center;
   transition:background 0.8s linear; flex-shrink:0;
 }
 .nf-countdown-ring::after {
   content:''; position:absolute; width:32px; height:32px;
-  background:#faf5ff; border-radius:50%;
+  background:#f0f9f4; border-radius:50%;
 }
-.nf-countdown-num  { position:relative; z-index:1; font-size:0.95rem; font-weight:800; color:#7c3aed; }
+.nf-countdown-num  { position:relative; z-index:1; font-size:0.95rem; font-weight:800; color:#157347; }
 .nf-countdown-label{ font-size:0.82rem; color:#6b7280; font-weight:500; }
 
 .nf-actions { display:flex; gap:0.75rem; width:100%; }
@@ -80,8 +80,8 @@
 .nf-btn:hover { transform:translateY(-2px); }
 
 .nf-btn-primary {
-  background:linear-gradient(135deg,#7c3aed,#a855f7); color:#fff;
-  box-shadow:0 4px 14px rgba(124,58,237,0.3);
+  background:linear-gradient(135deg,#157347,#2f9e6a); color:#fff;
+  box-shadow:0 4px 14px rgba(21,115,71,0.3);
 }
 
 @media(max-width:480px){

@@ -25,7 +25,7 @@ export const PACKAGES: {
     },
     {
         id: 'trio', label: 'Duo', subtitle: '2 Students', price: 'KSh 360', period: '/month',
-        icon: Users, color: '#3b82f6', popular: true,
+        icon: Users, color: '#7c3aed', popular: true,
         features: ['2 student profiles', 'All subjects & levels', 'Mock exams & quizzes', 'Progress tracking', 'Priority support'],
     },
     {
@@ -35,7 +35,7 @@ export const PACKAGES: {
     },
     {
         id: 'family', label: 'Family', subtitle: '4+ Students', price: 'KSh 1,080', period: '/month',
-        icon: Star, color: '#a855f7',
+        icon: Star, color: '#2f9e6a',
         features: ['Unlimited profiles', 'All subjects & levels', 'Mock exams & quizzes', 'Advanced analytics', 'Priority support', 'Early access to features'],
     },
 ];

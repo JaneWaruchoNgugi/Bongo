@@ -2,20 +2,20 @@
 
 .lvl-root {
   min-height: 100vh;
-  background: linear-gradient(160deg, #faf5ff 0%, #fff 60%);
+  background: linear-gradient(160deg, #f0f9f4 0%, #fff 60%);
   padding: 2rem 1.5rem 5rem;
 }
 
 /* ── Welcome hero ────────────────────────────────────────── */
 .lvl-welcome {
-  background: linear-gradient(135deg, #4c1d95 0%, #7c3aed 50%, #ec4899 100%);
+  background: linear-gradient(135deg, #0b3d28 0%, #157347 50%, #ec4899 100%);
   border-radius: 28px;
   padding: 2rem;
   color: #fff;
   margin-bottom: 1.5rem;
   position: relative;
   overflow: hidden;
-  box-shadow: 0 16px 48px rgba(124,58,237,0.35);
+  box-shadow: 0 16px 48px rgba(21,115,71,0.35);
 }
 
 .lvl-welcome::before {
@@ -58,7 +58,7 @@
 
 .lvl-welcome-info { flex: 1; }
 .lvl-welcome-info h1 {
-  font-family: 'Fredoka One', cursive;
+  font-family: 'Poppins', cursive;
   font-size: 1.6rem;
   font-weight: 400;
   color: #fff;
@@ -107,7 +107,7 @@
 }
 
 .lvl-stat-val {
-  font-family: 'Fredoka One', cursive;
+  font-family: 'Poppins', cursive;
   font-size: 1.15rem;
   font-weight: 400;
   color: #fff;
@@ -134,7 +134,7 @@
 }
 
 .lvl-section-header h2 {
-  font-family: 'Fredoka One', cursive;
+  font-family: 'Poppins', cursive;
   font-size: 1.2rem;
   font-weight: 400;
   color: var(--text);
@@ -170,7 +170,7 @@
 
 .lvl-subject-card {
   background: #fff;
-  border: 2px solid #f3e8ff;
+  border: 2px solid #e3f5ea;
   border-radius: 22px;
   padding: 1.25rem;
   cursor: pointer;
@@ -182,7 +182,7 @@
 
 .lvl-subject-card:hover {
   transform: translateY(-5px) rotate(-0.5deg);
-  box-shadow: 0 12px 32px rgba(124,58,237,0.15);
+  box-shadow: 0 12px 32px rgba(21,115,71,0.15);
   border-color: #c4b5fd;
 }
 
@@ -212,7 +212,7 @@
 
 .lvl-progress-bar {
   height: 8px;
-  background: #f3e8ff;
+  background: #e3f5ea;
   border-radius: 999px;
   overflow: hidden;
   margin-bottom: 4px;
@@ -255,11 +255,11 @@
   gap: 0.85rem;
   padding: 0.85rem 1rem;
   background: #fff;
-  border: 2px solid #f3e8ff;
+  border: 2px solid #e3f5ea;
   border-radius: 18px;
   transition: all 0.2s;
 }
-.lvl-activity-item:hover { box-shadow: 0 6px 20px rgba(124,58,237,0.1); border-color: #ddd6fe; transform: translateX(3px); }
+.lvl-activity-item:hover { box-shadow: 0 6px 20px rgba(21,115,71,0.1); border-color: #ddd6fe; transform: translateX(3px); }
 
 .lvl-activity-icon {
   width: 40px; height: 40px;
@@ -273,7 +273,7 @@
 .lvl-activity-time  { font-size: 0.72rem; color: var(--text-faint); }
 
 .lvl-activity-score {
-  font-family: 'Fredoka One', cursive;
+  font-family: 'Poppins', cursive;
   font-size: 1rem;
   font-weight: 400;
   color: var(--primary);
@@ -288,7 +288,7 @@
   justify-content: space-between;
   padding: 0.85rem 1rem;
   background: #fff;
-  border: 2px solid #f3e8ff;
+  border: 2px solid #e3f5ea;
   border-radius: 18px;
   gap: 1rem;
   transition: all 0.2s;
@@ -303,7 +303,7 @@
   font-size: 0.75rem;
   font-weight: 800;
   color: var(--text-faint);
-  background: #f3e8ff;
+  background: #e3f5ea;
   padding: 4px 10px;
   border-radius: 999px;
   white-space: nowrap;
@@ -315,15 +315,15 @@
   display: inline-flex;
   align-items: center;
   gap: 1rem;
-  background: linear-gradient(135deg, #faf5ff, #fff);
-  border: 2px solid #ede9fe;
+  background: linear-gradient(135deg, #f0f9f4, #fff);
+  border: 2px solid #d9efe1;
   border-radius: 20px;
   padding: 1rem 1.5rem;
   box-shadow: var(--shadow-xs);
 }
 
 .lvl-countdown-label { font-size: 0.72rem; color: var(--text-faint); font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; font-family: 'Nunito', sans-serif; }
-.lvl-countdown-val   { font-family: 'Fredoka One', cursive; font-size: 1.6rem; font-weight: 400; color: var(--primary); }
+.lvl-countdown-val   { font-family: 'Poppins', cursive; font-size: 1.6rem; font-weight: 400; color: var(--primary); }
 
 /* ── Performance grid ────────────────────────────────────── */
 .lvl-perf-grid {
@@ -338,14 +338,14 @@
   justify-content: space-between;
   padding: 0.85rem 1rem;
   background: #fff;
-  border: 2px solid #f3e8ff;
+  border: 2px solid #e3f5ea;
   border-radius: 16px;
   transition: border-color 0.2s;
 }
 .lvl-perf-item:hover { border-color: #ddd6fe; }
 
 .lvl-perf-name  { font-weight: 800; font-size: 0.88rem; color: var(--text); font-family: 'Nunito', sans-serif; }
-.lvl-perf-score { font-family: 'Fredoka One', cursive; font-size: 1rem; font-weight: 400; color: var(--primary); }
+.lvl-perf-score { font-family: 'Poppins', cursive; font-size: 1rem; font-weight: 400; color: var(--primary); }
 
 /* ── Responsive ──────────────────────────────────────────── */
 @media (max-width: 768px) {
@@ -363,14 +363,14 @@
 
 /* ── Welcome hero ────────────────────────────────────────── */
 .lvl-welcome {
-  background: linear-gradient(135deg, #4c1d95 0%, #7c3aed 50%, #a855f7 100%);
+  background: linear-gradient(135deg, #0b3d28 0%, #157347 50%, #2f9e6a 100%);
   border-radius: 24px;
   padding: 2rem;
   color: #fff;
   margin-bottom: 1.5rem;
   position: relative;
   overflow: hidden;
-  box-shadow: 0 12px 40px rgba(124,58,237,0.3);
+  box-shadow: 0 12px 40px rgba(21,115,71,0.3);
 }
 
 .lvl-welcome::before {
@@ -518,7 +518,7 @@
 .lvl-subject-card:hover {
   transform: translateY(-4px);
   box-shadow: var(--shadow-md);
-  border-color: rgba(124,58,237,0.25);
+  border-color: rgba(21,115,71,0.25);
 }
 
 .lvl-subject-card-top {
@@ -625,7 +625,7 @@
   gap: 1rem;
   transition: border-color 0.2s;
 }
-.lvl-topic-item:hover { border-color: rgba(124,58,237,0.2); }
+.lvl-topic-item:hover { border-color: rgba(21,115,71,0.2); }
 
 .lvl-topic-info { flex: 1; }
 .lvl-topic-title   { font-weight: 700; font-size: 0.88rem; color: var(--text); display: block; }
@@ -647,7 +647,7 @@
   align-items: center;
   gap: 1rem;
   background: linear-gradient(135deg, var(--purple-50), #fff);
-  border: 1.5px solid rgba(124,58,237,0.18);
+  border: 1.5px solid rgba(21,115,71,0.18);
   border-radius: 16px;
   padding: 1rem 1.5rem;
   box-shadow: var(--shadow-xs);

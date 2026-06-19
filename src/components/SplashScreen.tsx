@@ -13,7 +13,7 @@ export function SplashScreen({ onDone }: { onDone: () => void }) {
     return (
         <div className={`splash-root ${hiding ? 'splash-hide' : ''}`}>
             <div className="splash-logo">
-                <GraduationCap size={52} color="#a78bfa" />
+                <GraduationCap size={52} color="#5fae84" />
                 <span className="splash-wordmark">High <strong>Scores</strong></span>
             </div>
             <div className="splash-bar"><div className="splash-bar-fill" /></div>

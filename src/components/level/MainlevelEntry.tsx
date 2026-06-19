@@ -9,7 +9,6 @@ import type {SubjectTopics} from './data/topicsData';
 import type {EducationLevel} from '../../store/useStore';
 import type {Subject as MiddleSubject} from './MiddleSchool/types';
 import Lvl4to9SubjectsView from './Subjects/lvl4-9sub/Lvl4to9SubjectsView';
-import Footer from '../Footer';
 import "../../styles/mainlvl.css"
 import {TriangleBackground} from '../TriangleBackground';
 import {
@@ -215,7 +214,7 @@ export const MainLevelEntry = () => {
                                 <button
                                     key={st.subject}
                                     className="mle-browse-card"
-                                    style={{'--card-grad': meta?.grad ?? 'linear-gradient(135deg,#6366f1,#a78bfa)', animationDelay: `${i * 0.05}s`} as React.CSSProperties}
+                                    style={{'--card-grad': meta?.grad ?? 'linear-gradient(135deg,#6366f1,#5fae84)', animationDelay: `${i * 0.05}s`} as React.CSSProperties}
                                     onClick={() => {
                                         if (level === 'middle_school' && grade >= 4 && grade <= 9) {
                                             setLvl4to9Subject(st.subject);
@@ -313,7 +312,6 @@ export const MainLevelEntry = () => {
 
             </div>
         </div>
-        <Footer />
         </>
     );
 };
