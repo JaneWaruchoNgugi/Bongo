@@ -17,7 +17,7 @@ import {
   where,
   type Unsubscribe,
 } from 'firebase/firestore';
-import { signInAnonymously } from 'firebase/auth';
+import { onAuthStateChanged, signInAnonymously } from 'firebase/auth';
 import { auth, db } from './firebase';
 import type { Conversation, Message, StaffMember } from './types';
 
@@ -25,8 +25,25 @@ const CONVERSATIONS = 'conversations';
 
 /* ── Auth helpers ────────────────────────────────────────── */
 
-/** Ensure the current visitor has a (anonymous) Firebase Auth uid for chat. */
+// Resolves once Firebase has restored any persisted session (the first
+// onAuthStateChanged tick). Without this gate, callers run before a
+// signed-in student is restored and get the wrong uid.
+let authReady: Promise<void> | null = null;
+function waitForAuthReady(): Promise<void> {
+  if (!authReady) {
+    authReady = new Promise(resolve => {
+      const unsub = onAuthStateChanged(auth, () => {
+        unsub();
+        resolve();
+      });
+    });
+  }
+  return authReady;
+}
+
+/** The current chat uid: the signed-in student if present, else an anonymous one. */
 export async function ensureAnonAuth(): Promise<string> {
+  await waitForAuthReady();
   if (auth.currentUser) return auth.currentUser.uid;
   const cred = await signInAnonymously(auth);
   return cred.user.uid;
@@ -68,10 +85,14 @@ export async function subscribeMyConversation(
 ): Promise<Unsubscribe> {
   const uid = await ensureAnonAuth();
   const q = query(collection(db, CONVERSATIONS), where('userUid', '==', uid), limit(1));
-  return onSnapshot(q, snap => {
-    if (snap.empty) cb(null);
-    else cb({ id: snap.docs[0].id, ...(snap.docs[0].data() as Omit<Conversation, 'id'>) });
-  });
+  return onSnapshot(
+    q,
+    snap => {
+      if (snap.empty) cb(null);
+      else cb({ id: snap.docs[0].id, ...(snap.docs[0].data() as Omit<Conversation, 'id'>) });
+    },
+    err => console.error('[support-chat] conversation subscription failed:', err.code, err)
+  );
 }
 
 /** Append a message from the student. */
@@ -114,9 +135,11 @@ export function subscribeMessages(
     collection(db, CONVERSATIONS, conversationId, 'messages'),
     orderBy('createdAt', 'asc')
   );
-  return onSnapshot(q, snap => {
-    cb(snap.docs.map(d => ({ id: d.id, ...(d.data() as Omit<Message, 'id'>) })));
-  });
+  return onSnapshot(
+    q,
+    snap => cb(snap.docs.map(d => ({ id: d.id, ...(d.data() as Omit<Message, 'id'>) }))),
+    err => console.error('[support-chat] message subscription failed:', err.code, err)
+  );
 }
 
 /** Append a reply from a staff member and assign the chat to them. */

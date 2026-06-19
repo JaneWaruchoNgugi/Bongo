@@ -74,6 +74,8 @@ const SupportChatWidget: React.FC = () => {
       if (!id) id = await getOrCreateConversation({ accountPhone, profileName });
       await sendUserMessage(id, text, profileName);
       setDraft('');
+    } catch (err) {
+      console.error('[support-chat] failed to send message:', err);
     } finally {
       setSending(false);
     }
@@ -96,8 +98,11 @@ const SupportChatWidget: React.FC = () => {
       {open && (
         <section className="support-panel" role="dialog" aria-label="Support chat">
           <header className="support-panel-header">
-            <div>
-              <strong>Bongo Support</strong>
+            <span className="support-head-avatar">
+              <Headphones size={18} />
+            </span>
+            <div className="support-head-info">
+              <strong>HighScores Support</strong>
               <span>We usually reply within a few minutes</span>
             </div>
             <button type="button" onClick={() => setOpen(false)} aria-label="Close">
@@ -116,8 +121,8 @@ const SupportChatWidget: React.FC = () => {
                 key={m.id}
                 className={`support-bubble ${m.senderType === 'user' ? 'is-user' : 'is-support'}`}
               >
-                <p>{m.text}</p>
-                <small>{fmtTime(m.createdAt?.toMillis() ?? null)}</small>
+                <span className="support-bubble-text">{m.text}</span>
+                <span className="support-bubble-time">{fmtTime(m.createdAt?.toMillis() ?? null)}</span>
               </div>
             ))}
           </div>
