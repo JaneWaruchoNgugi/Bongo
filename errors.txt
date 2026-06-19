@@ -1,0 +1,23 @@
+src/components/learn/LearnHome.tsx(149,34): error TS7006: Parameter 'i' implicitly has an 'any' type.
+src/components/learn/LearnHome.tsx(302,23): error TS7006: Parameter 'd' implicitly has an 'any' type.
+src/components/learn/QuizRunner.tsx(3,35): error TS2307: Cannot find module '../../lib/learn' or its corresponding type declarations.
+src/components/learn/QuizRunner.tsx(4,23): error TS2307: Cannot find module './SvgFigure' or its corresponding type declarations.
+src/components/learn/QuizRunner.tsx(58,35): error TS7006: Parameter 'o' implicitly has an 'any' type.
+src/components/learn/QuizRunner.tsx(58,38): error TS7006: Parameter 'oi' implicitly has an 'any' type.
+src/components/learn/QuizRunner.tsx(101,25): error TS7006: Parameter 'o' implicitly has an 'any' type.
+src/components/learn/QuizRunner.tsx(101,28): error TS7006: Parameter 'oi' implicitly has an 'any' type.
+src/components/learn/SubjectTopics.tsx(9,8): error TS2307: Cannot find module '../../lib/learn' or its corresponding type declarations.
+src/components/learn/TopicLesson.tsx(4,54): error TS2307: Cannot find module '../../lib/learn' or its corresponding type declarations.
+src/components/learn/TopicLesson.tsx(16,28): error TS7006: Parameter 't' implicitly has an 'any' type.
+src/components/learn/TopicLesson.tsx(43,59): error TS7006: Parameter 'para' implicitly has an 'any' type.
+src/components/learn/TopicLesson.tsx(43,65): error TS7006: Parameter 'i' implicitly has an 'any' type.
+src/components/learn/TopicLesson.tsx(49,47): error TS7006: Parameter 'line' implicitly has an 'any' type.
+src/components/learn/TopicLesson.tsx(49,53): error TS7006: Parameter 'i' implicitly has an 'any' type.
+src/components/learn/TopicTest.tsx(14,8): error TS2307: Cannot find module '../../lib/learn' or its corresponding type declarations.
+src/components/learn/TopicTest.tsx(15,20): error TS2307: Cannot find module '../../lib/gamification' or its corresponding type declarations.
+src/components/learn/TopicTest.tsx(16,31): error TS2307: Cannot find module '../../lib/challenges' or its corresponding type declarations.
+src/components/learn/TopicTest.tsx(38,53): error TS7006: Parameter 'd' implicitly has an 'any' type.
+src/store/useStore.ts(4,22): error TS2307: Cannot find module '../lib/firebase' or its corresponding type declarations.
+src/store/useStore.ts(12,8): error TS2307: Cannot find module '../lib/studentAuth' or its corresponding type declarations.
+src/store/useStore.ts(136,53): error TS7006: Parameter 'data' implicitly has an 'any' type.
+Error: Command "npm run build" exited with 2
